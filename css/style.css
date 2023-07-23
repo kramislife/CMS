@@ -10,11 +10,10 @@ h1 {
     left: 900px;
     top: calc(50% - 102px/2 - 114px);
     font-family:Georgia, 'Times New Roman', Times, serif;
-    font-style: italic;
     font-size: 40px;
     line-height: 51px;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: uppercase;   
 }
 
 #pup {
@@ -52,7 +51,7 @@ span {
     font-size: 45px;
     line-height: 50px;
     text-transform: uppercase;
-    background:  #9f0f0f;  
+    background:  #990a0a;  
 }
 #Students:hover { 
     background-color: #680303;
