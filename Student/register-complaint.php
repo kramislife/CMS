@@ -37,8 +37,8 @@ if (isset($_POST['submit'])) {
     $query = mysqli_stmt_execute($stmt);
 
     if ($query) {
-      $_SESSION['complaintRegistered'] = true; // Set a session variable to indicate complaint registration
-      header("Location: register-complaint"); // Redirect to a success page
+      $_SESSION['complaintRegistered'] = true; 
+      header("Location: register-complaint"); 
       exit();
     } else {
       $errormsg = "It looks like we have a problem in the Database. Please Try Again Later!";
@@ -47,10 +47,10 @@ if (isset($_POST['submit'])) {
     $errormsg = "Invalid UserID!";
   }
 } else {
-  // Check if the complaint is already registered in the current session
+
   if (isset($_SESSION['complaintRegistered']) && $_SESSION['complaintRegistered'] === true) {
     $successmsg = "Complaint Registered Successfully!";
-    // Unset the session variable to prevent showing the success message again
+
     unset($_SESSION['complaintRegistered']);
   }
 }

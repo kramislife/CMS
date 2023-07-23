@@ -20,11 +20,17 @@ $department = $_POST['department'];
 
 $query=mysqli_query($conn, "UPDATE faculty_login SET ContactNo='$contactNumber',  Email='$userEmail', Address='$address', Department ='$department' WHERE UserID='".$_SESSION['UserID']."'");
 
-if($query){
-$successmsg="Profile Updated Successfully!";
-}else{
-$errormsg="Profile failed to Update!";
+if ($query) {
+  $_SESSION['profileUpdated'] = true;
+  header("Location: profile");
+  exit();
+} else {
+  $errormsg = "It looks like we have a problem in the Database. Please Try Again Later!";
 }
+} 
+if (isset($_SESSION['profileUpdated']) && $_SESSION['profileUpdated'] === true) {
+$successmsg = "Profile Updated Successfully!";
+unset($_SESSION['profileUpdated']);
 }
 ?>
 
@@ -50,15 +56,15 @@ $errormsg="Profile failed to Update!";
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">  
   </head>
-  <body>      
-  <section id="container">
-
-<?php include("../Admin/sidebar.php"); ?>
+  <body>    
+    
+  <?php include("../admin/sidebar.php"); ?>
 <?php include("../includes/header.php"); ?>  
 
+  <section id="container">
   <section id="main-content">
     <section class="wrapper">
-      <h3 style=" padding-top: 10px;">PERSONAL INFORMATION</h3>
+    <h4 style=" padding-bottom:10px; padding-top:10px; font-weight:bolder; font-family: 'Times New Roman', Times, serif;">PERSONAL INFORMATION</h4>
       <div class="row mt">
         <div class="col-lg-12">
           <div class="form-panel">
@@ -85,13 +91,13 @@ $errormsg="Profile failed to Update!";
 
             <form class="form-horizontal style-form" method="post" name="profile">
               <div class="form-group">
-              <label class="col-sm-2 col-sm-2 control-label">Name</label>
+              <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Name</strong></label>
                 <div class="col-sm-4">
                   <input type="text" name="fullName" required="required" value="<?php echo htmlentities($row['FullName']);?>" class="form-control" disabled>                 
                 </div>
-                <label class="col-sm-2 control-label">Department</label>
+                <label class="col-sm-2 control-label"><strong style="color: black">Department</strong></label>
                   <div class="col-sm-4">
-                    <select name="department" id="department" class="form-control" required="">
+                    <select name="department" id="department" class="form-control" required="" disabled>
                       <option disabled selected value="">Department</option>
                       <option value="Administrator">Administrator</option>
                       <option value="HR Department">HR Department</option>
@@ -101,47 +107,50 @@ $errormsg="Profile failed to Update!";
               </div>
 
               <div class="form-group">   
-                <label class="col-sm-2 col-sm-2 control-label">Place of Birth</label>
+                <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Place of Birth</strong></label>
                 <div class="col-sm-4">
                   <input type="text" name="placeOfBirth" required="required" value="<?php echo htmlentities($row['PlaceofBirth']);?>" class="form-control" disabled>
                 </div>
-                <label class="col-sm-2 col-sm-2 control-label">Date of Birth</label>
+                <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Date of Birth</strong></label>
                 <div class="col-sm-4">
                   <input type="text" name="dateOfBirth" required="required" value="<?php echo htmlentities($row['DateofBirth']);?>" class="form-control" disabled>
                 </div>
               </div>
 
               <div class="form-group">
-              <label class="col-sm-2 col-sm-2 control-label">Gender</label>
+              <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Gender</strong></label>
                 <div class="col-sm-4">
                  <input type="text" name="gender" required="required" value="<?php echo htmlentities($row['Gender']);?>"class="form-control" disabled> 
                 </div>
-                <label class="col-sm-2 col-sm-2 control-label">Email Address</label>
+                <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Email Address</strong></label>
                 <div class="col-sm-4">
                   <input type="email" name="userEmail" required="required" value="<?php echo htmlentities($row['Email']);?>" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-              <label class="col-sm-2 col-sm-2 control-label">Contact Number</label>
+              <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Contact Number</strong></label>
               <div class="col-sm-4">
-                <input type="text"  name="contactNumber" required="required" maxlength="10" pattern="\d{10}" value="<?php echo htmlentities($row['ContactNo']);?>" class="form-control">
+                <input type="text"  name="contactNumber" required="required" maxlength="11" pattern="\d{11}" value="<?php echo htmlentities($row['ContactNo']);?>" class="form-control">
               </div>
 
-                <label class="col-sm-2 col-sm-2 control-label">Address </label>
+                <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Address</strong> </label>
                 <div class="col-sm-4">
                 <textarea  name="address" required="required" class="form-control"><?php echo htmlentities($row['Address']);?></textarea>
                </div>              
               </div>
 
               <div class="form-group">
-               <div class="col-sm-10" style="padding-top: 5px; padding-left:22%;" >
-                <span><i style="font-weight:bolder;">I hereby Certify that all the information provided are true and correct to the best of my knowledge.</i></span>
+                <div class="col-sm-10 text-center">
+                  <div class="pt-3 pl-4">
+                  <span><i class="font-weight-bold"> <strong style="color: black">I hereby Certify that all the information provided are true and correct to the best of my knowledge.</strong></i></span>
+                  </div>
+                
+                  <div class="col-sm-12 d-flex justify-content-center"  style="padding-top: 15px;">
+                    <button type="submit" name="submit" class="btn btn-success ">Save Profile</button>
+                  </div>
                 </div>
-                <div class="col-sm-10" style="padding-left:43%; padding-top:20px;">
-                <button type="submit" name="submit" class="btn btn-success">Save Profile</button>
-                </div>
-                </div>
+              </div>   
             </form>
           </div>
         </div>

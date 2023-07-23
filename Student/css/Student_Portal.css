@@ -130,6 +130,10 @@ form.sign-up-form {
   transition: 0.4s;
 }
 
+.btn-close{
+  color: black;
+}
+
 label {
   position: absolute;
   left: 0;
@@ -288,6 +292,24 @@ main.sign-up-mode .carousel {
   font-size: 1.6rem;
 }
 
+.badge-dismissable {
+  position: relative;
+  display: inline-block;
+  padding: 5px 13px 6px 14px;
+  border-radius: 10rem;
+  background-color: #9f0f0f;
+  color: #e6e3e3;
+}
+
+.badge-dismissable .close {
+  position: absolute;
+  right: 0.5rem;
+  top: 52%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 25px;
+}
+
 .bullets {
   display: flex;
   align-items: center;
@@ -316,6 +338,10 @@ main.sign-up-mode .carousel {
     height: auto;
     max-width: 550px;
     overflow: hidden;
+  }
+
+  .badge-dismissable {
+    margin-bottom: 30px;
   }
 
   .inner-box {

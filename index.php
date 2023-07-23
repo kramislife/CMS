@@ -32,11 +32,11 @@ include ("./includes/connection.php")
     <span>Choose an Appropriate Portal.</span>
 
     <div id="Students">
-        <a href="./Student/portal">Student</a>
+        <a href="./Student/Portal">Student</a>
     </div>
 
     <div id="Faculty">
-        <a style="color:black; text-decoration: none;"  href="./Faculty/portal">Faculty</a>
+        <a style="color:black; text-decoration: none;"  href="./Faculty/Portal">Faculty</a>
     </div>
 
 

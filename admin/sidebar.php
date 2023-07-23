@@ -26,8 +26,6 @@ while ($row = mysqli_fetch_array($query)) {
     }
 }
 
-
-
 ?>
 
 <aside>
@@ -53,10 +51,30 @@ while ($row = mysqli_fetch_array($query)) {
         </a>                
       </li>
 
+     <!-- <li class="sub-menu">
+        <a href="#">
+          <i class="fa fa-list"></i>
+          <span>Complaint Records</span>
+        </a>
+        <ul class="sub">
+          <li><a href="pending-complaint">Pending Complaints</a></li>
+          <li><a href="confirmed-complaint">In Process Complaints</a></li>
+          <li><a href="closed-complaint">Closed Complaints</a></li>
+        </ul>                
+      </li> -->
+
+      
       <li class="sub-menu">
         <a href="complaint-records">
-          <i class="fa fa-database"></i>
+          <i class="fa fa-list"></i>
           <span>Complaint Records</span>
+        </a>                
+      </li>
+
+      <li class="sub-menu">
+        <a href="complaint-summary">
+          <i class="fa fa-database"></i>
+          <span>Complaint Summary</span>
         </a>                
       </li>
 
@@ -77,11 +95,11 @@ while ($row = mysqli_fetch_array($query)) {
           <li><a href="change-password">Change Password</a></li>
         </ul>
       </li>
-  
-      <li class="sub-menu">
+
+      <li class="mt">
       <a href="log-out">
         <i class="fa fa-sign-out"></i>
-        <span>Sign-out</span>
+        <span><b>Sign-out</b></span>
       </a>
       </li> 
 

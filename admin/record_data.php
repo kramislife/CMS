@@ -10,8 +10,8 @@ include("../includes/check_session.php");
 $successmsg = '';
 $errormsg = '';
 
-// VIEW FUNCTION IN MODAL
-if (isset($_POST['checking_view_btn'])) {
+// EDIT FUNCTION IN MODAL
+if (isset($_POST['checking_edit_btn'])) {
   $complaintNumber = $_POST['complaintNumber'];
 
   $query = "SELECT * FROM complaints WHERE ComplaintNumber = '$complaintNumber'";
@@ -19,6 +19,11 @@ if (isset($_POST['checking_view_btn'])) {
 
   if (mysqli_num_rows($query_run) > 0) {
     $row = mysqli_fetch_assoc($query_run);
+
+    $status = $row['Status'];
+    if ($status === NULL) {
+      $status = "Pending";
+    }
 
     $data = array(
       'success' => true,
@@ -29,7 +34,7 @@ if (isset($_POST['checking_view_btn'])) {
       'others' => $row['Others'],
       'ComplaintDetails' => $row['ComplaintDetails'],
       'complaintFile' => $row['ComplaintFile'],
-      'status' => $row['Status']
+      'status' => $status
     );
 
     echo json_encode($data);
@@ -37,27 +42,39 @@ if (isset($_POST['checking_view_btn'])) {
     $data = array('success' => false);
     echo json_encode($data);
   }
+} elseif (isset($_POST['complaintNumber']) && isset($_POST['status'])) {
+  $complaintNumber = $_POST['complaintNumber'];
+  $status = $_POST['status'];
+
+  // Update the complaint status in the database
+  $query = "UPDATE complaints SET Status = '$status' WHERE ComplaintNumber = '$complaintNumber'";
+  $query_run = mysqli_query($conn, $query);
+
+  if ($query_run) {
+    $_SESSION['successmsg'] = 'Complaint Status Updated Successfully!';
+    echo json_encode(array('success' => true));
+  } else {
+    echo json_encode(array('success' => false));
+  }
+  exit;
 }
 
 // DELETE FUNCTION IN MODAL
 if (isset($_POST['deleteData'])) {
   $id = $_POST['deleteID'];
-
   $id = mysqli_real_escape_string($conn, $id);
 
-  $query = "DELETE FROM complaints WHERE ComplaintNumber = '$id'";
-  $query_run = mysqli_query($conn, $query);
+  $deleteQuery = "UPDATE complaints SET Flag = 1 WHERE ComplaintNumber = '$id'";
+  $deleteResult = mysqli_query($conn, $deleteQuery);
 
-  if ($query_run) {
-    $_SESSION['successmsg'] = 'Complaint Successfully Deleted.';
-    header("Location: complaint-records");
-    exit;
+  if ($deleteResult) {
+      $_SESSION['successmsg'] = 'Complaint Deleted Successfully!';
   } else {
-    $_SESSION['errormsg'] = 'Failed to Delete Complaint.';
-    header("Location: complaint-records");
-    exit;
+      $_SESSION['errormsg'] = 'Failed to Delete Complaint.';
   }
+
+  header("Location: complaint-records");
+  exit;
 }
-
+  
 ?>
-

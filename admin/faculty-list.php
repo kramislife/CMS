@@ -47,15 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html plang="en">
 <head>
-  <meta charset="utf-8">  
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS | Faculty</title>
+  <title>CMS | Complaint</title>
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
-  <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css"/>
-  <link rel="stylesheet" type="text/css" href="../assets/css/zabuto_calendar.css">
-  <link rel="stylesheet" type="text/css" href="../assets/js/gritter/css/jquery.gritter.css" />
-  <link rel="stylesheet" type="text/css" href="../assets/lineicons/style.css">    
+  <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/style-responsive.css">
   <link rel="apple-touch-icon" sizes="180x180" href="../favicon_package_v0.16/apple-touch-icon.png">
@@ -63,20 +60,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon_package_v0.16/favicon-16x16.png">
   <link rel="manifest" href="../favicon_package_v0.16/site.webmanifest">
   <link rel="mask-icon" href="../favicon_package_v0.16/safari-pinned-tab.svg" color="#5bbad5">
+   <link rel="stylesheet" href="//cdn.datatables.net/autofill/2.5.3/css/autoFill.bootstrap4.min.css"> 
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.bootstrap4.min.css">
   <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="theme-color" content="#ffffff">  
+  <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-<section id="container">
-  <?php include("../Admin/sidebar.php"); ?>
-  <?php include("../includes/header.php"); ?>
 
+<?php include("../admin/sidebar.php"); ?>
+<?php include("../includes/header.php"); ?>  
+
+<?php
+session_start();
+error_reporting(0);
+ini_set('display_errors', 0);
+
+include('../includes/connection.php');
+include("../includes/check_session.php");
+
+$errorMessage = '';
+$successMessage = '';
+
+?>
+
+<section id="container">
   <section id="main-content">
     <section class="wrapper">
-      <h3>Faculty</h3>
-     
+      <h4 style="padding-bottom: 10px; padding-top: 10px; font-weight: bolder; font-family: 'Times New Roman', Times, serif;">FACULTY MEMBER</h4>
+      
       <div class="row mt">
+     <!-- <button class="btn fa fa-plus" style="float: right; margin-bottom: 10px; font-weight: bolder; color: black; font-size: larger;" data-toggle="modal" data-target="#createUserModal"> Create New Faculty</button> -->
         <div class="col-lg-12">
+
+     <!--   <div class="btn-group">
+              <button class="btn btn-default buttons-copy" tabindex="0" aria-controls="records" type="button">
+                <span>Copy</span>
+              </button>
+              <button class="btn btn-default buttons-csv" tabindex="0" aria-controls="records" type="button">
+                <span>CSV</span>
+              </button>
+              <button class="btn btn-default buttons-excel" tabindex="0" aria-controls="records" type="button">
+                <span>Excel</span>
+              </button>
+              <button class="btn btn-default buttons-pdf" tabindex="0" aria-controls="records" type="button">
+                <span>PDF</span>
+              </button>
+              <button class="btn btn-default buttons-print" tabindex="0" aria-controls="records" type="button">
+                <span>Print</span>
+              </button>
+            </div> -->
+
           <?php if (!empty($errorMessage)): ?>
             <div class="alert alert-danger alert-dismissible" role="alert">
               <?php echo $errorMessage; ?>
@@ -95,16 +129,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
           <?php endif; ?>
 
-            <section id="unseen">
-            <button class="btn btn-dark fa fa-plus" style="float: right; margin-bottom: 10px; font-weight:bolder; color:black; font-size:larger;" data-toggle="modal" data-target="#createUserModal"> Create New Faculty</button>
+          
+          <div class="content-panel">      
               <table id="faculty" class="table table-bordered table-striped table-condensed">
+             
                 <thead>
                   <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Email</th>
-                    <th class="text-center">Contact Number</th>
-                    <th class="text-center">Department</th>
-                    <th class="text-center">Updated Time</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <th>Date of Birth</th>
+                    <th>Department</th>
+                    <th>Updated Time</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -113,21 +149,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   while ($row = mysqli_fetch_array($query)) {
                   ?>
                     <tr>
-                      <td class="text-center"><?php echo htmlentities($row['FullName']); ?></td>
-                      <td class="text-center"><?php echo htmlentities($row['Email']); ?></td>
-                      <td class="text-center"><?php echo htmlentities($row['ContactNo']); ?></td>
-                      <td class="text-center"><?php echo htmlentities($row['Department']); ?></td>
-                      <td class="text-center"><?php echo htmlentities($row['Updated_Time']); ?></td>
+                      <td data-label="Name:"><?php echo htmlentities($row['FullName']); ?></td>
+                      <td data-label="Email:"><?php echo htmlentities($row['Email']); ?></td>
+                      <td  data-label="Contact Number:"><?php echo htmlentities($row['ContactNo']); ?></td>
+                      <td  data-label="Birth Date:"><?php echo htmlentities($row['DateofBirth']); ?></td>
+                      <td  data-label="Department:"><?php echo htmlentities($row['Department']); ?></td>
+                      <td  data-label="Time:"><?php echo htmlentities($row['Updated_Time']); ?></td>
                     </tr>
                   <?php } ?>
                 </tbody>
               </table>
-            </section>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+  </section>
+</section>
 
-      <!-- Create User Modal -->
+
+      <!-- Create User Modal 
       <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -165,12 +206,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
       </div>
+    </div>
+  </div> -->
     </section>
   </section>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+  <!-- jQuery -->
+  
+  <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.bootstrap4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 
-  <script src="../assets/js/jquery.js"></script>
+
+<!--DATA TABLES -->
+<script>
+  $(document).ready(function() {
+    $('#faculty').DataTable({
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          extend: 'copy',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'excel',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'pdf',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'csv',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'print',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+      ],
+      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      searching: true,
+      paging: true,
+      ordering: true,
+      info: true,
+      order: true,
+    });
+  });
+</script>
+          
   <script src="../assets/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="../assets/js/jquery.dcjqaccordion.2.7.js"></script>
   <script src="../assets/js/jquery.scrollTo.min.js"></script>
@@ -178,3 +280,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="../assets/js/common-scripts.js"></script>
 </body>
 </html> 
+
+

@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
             // Password is correct (hashed password matches)
             if (strpos($username, "admin") !== false) {
                 // Redirect to the Analytics module for admin
-                header("Location: ../osas/dashboard");
+                header("Location: ../admin/dashboard");
             } else {
                 // Redirect to the regular user dashboard
                 header("Location: ../Faculty/dashboard");
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
             // Password is correct (not hashed password matches)
             if (strpos($username, "admin") !== false) {
                 // Redirect to the Analytics module for admin
-                header("Location: ../osas/dashboard");
+                header("Location: ../admin/dashboard");
             } else {
                 // Redirect to the regular user dashboard
                 header("Location: ../Faculty/dashboard");
@@ -48,71 +48,75 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Log-in</title>
-    
-    <link rel="stylesheet" href="../Faculty/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Faculty/css/Faculty_Portal.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_package_v0.16/apple-touch-icon.png">
+    <title>CMS | Student Portal</title>
+    <link rel="stylesheet" href="../Student/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Student/css/Student_Portal.css">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon_package_v0.16/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_package_v0.16/favicon-16x16.png">
     <link rel="manifest" href="../favicon_package_v0.16/site.webmanifest">
     <link rel="mask-icon" href="../favicon_package_v0.16/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">   
 </head>
 <body>
+    <main>           
+        <div class="box">   
+            <div class="inner-box">    
+                <div class="forms-wrap">
+                    <form action="" name="form" method="POST" autocomplete="off" class="sign-in-form">
+                        <div class="logo">
+                            <img src="../img/CMS.png" alt="CMS">
+                            <h1>e:Reklamo</h1>
+                        </div>
+                        
+                        <?php if (isset($_GET['error'])) { ?>
+                            <div class="badge-dismissable">
+                                Incorrect Credentials!
+                                <span class="close" aria-label="Close" onclick="this.parentElement.style.display='none';">&times;</span>
+                            </div>
+                        <?php } ?>
 
-    <h1>Faculty's Portal</h1>
-            <form action="" name="form" method="post">
-                
-            <div class="container">
-
-            <div class="mx-auto col-10 col-md-8 col-lg-6">
-
-            <?php
-                if(isset($_GET['error']))
-                { ?>
-                 <div class="alert alert-danger alert-dismissible" role="alert" id="alert_danger">
-                <a href="" class="btn-close" data-dismiss="alert" aria-label="close"></a>
-                    <strong>Invalid Credentials!</strong> Please Try Again.
+                        <div class="actual-form">                           
+                            <div class="input-wrap-text">
+                                <input type="text" name="user" class="input-field" autocomplete="off" required>
+                                <label>Enter your Username</label>
+                            </div>
+                            <div class="input-wrap">
+                                <input type="password" maxlength="20" name="pass" class="input-field" autocomplete="off" required>
+                                <label>Password</label>
+                            </div>
+                            <p class="text text-password">
+                               <a href="../Faculty/forgotpassword">Forgot Password?</a>
+                            </p>
+                            <input class="sign-btn btn btn-danger" id="btn" type="submit" name="submit" value="Sign-in">
+                            <p class="text">
+                                By signing up, I agree to the PUP Online Services
+                                <a href="https://www.pup.edu.ph/terms/" target="_blank">Terms of Services</a> and
+                                <a href="https://www.pup.edu.ph/privacy/" target="_blank">Privacy Statement</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="carousel">
+                    <div class="images-wrapper">
+                        <img src="../img/complaints.png" class="image img-1 show" alt="complaints">
+                        <img src="../img/school.jpg" class="image img-2" alt="">
+                        <img src="../img/pup.jpg" class="image img-3" alt="">
+                    </div>
+                </div>
             </div>
-            <?php } ?>
-
-                          <!--USERNAME-->
-    <div class="form-floating mb-3 opacity-75 fw-bold">
-        <input type="text" class="form-control" style="font-weight:bolder;" name="user" id="floatingInput" placeholder="q" required>
-        <label for="floatingInput">Enter your Username</label>
-    </div>      
-
-                        <!--PASSWORD-->
-    <div class="form-floating opacity-75 fw-bold">
-        <input type="password" class="form-control" style="font-weight:bolder;" name="pass" id="floatingPassword" placeholder="Enter your Password" required maxlength="20">
-        <label for="floatingPassword">Enter your Password</label>
-    </div> 
-                         <!--SUBMIT-->
-    
-    <div class="d-grid gap-2">
-        <input class="btn btn-primary" id="btn" type="submit" name="submit" value="Sign-in">
-    <a href="../Faculty/forgotpassword" button type="button" class="btn btn-danger" id="dngr">Forgot Password?</a>
         </div>
-               
-        </div> 
-        </div>
-                
-    <script src="js/bootstrap.min.js"></script>
+    </main>    
+    <script src="../js/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 </body>
 </html>
-
-
-
-
 
