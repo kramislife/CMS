@@ -1,0 +1,85 @@
+html, body {
+    background-color: #E2DDDD;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    position: absolute;
+    width: 590px;
+    height: 102px;
+    left: 900px;
+    top: calc(50% - 102px/2 - 114px);
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size: 40px;
+    line-height: 51px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#pup {
+    position: absolute;
+    width: 900px;
+    height: 710px;
+    left: calc(40% - 690px/2 - 295px);
+    top: calc(50% - 720px/2);
+
+   
+}
+
+#logo {
+    position: absolute;
+    width: 149px;
+    height: 149px;
+    left: 74.5%;
+    top: calc(50% - 149px/2 - 260.5px);
+}
+
+span {
+    position: absolute;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 25px;
+    top: 320px;
+    left: calc(53% - 540px/2 + 511px);
+
+}
+#Students {
+    padding: 10px 100px 10px 100px;
+    position: absolute;
+    left: calc(50% - 316px/2 + 400px);
+    top: calc(50% - 64px/2 + 35px);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 45px;
+    line-height: 50px;
+    text-transform: uppercase;
+    background:  #9f0f0f;  
+}
+#Students:hover { 
+    background-color: #680303;
+    color: rgb(232, 225, 225);
+}
+
+#Students a {
+    color: #FFFAD7;
+    text-decoration: none;
+}
+
+a:link { text-decoration: none; }
+
+#Faculty {
+    padding: 10px 105px 10px 100px;
+    position: absolute;
+    left: calc(50% - 316px/2 + 400px);
+    top: 445px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 45px;
+    line-height: 50px;
+    text-indent: 5px;
+    text-transform: uppercase;  
+    background:  #2665BB;
+}
+
+#Faculty:hover { 
+    background-color: #1e549e;;
+    color: rgb(232, 225, 225);  
+}
