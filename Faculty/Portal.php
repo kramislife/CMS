@@ -54,9 +54,9 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS | Student Portal</title>
+    <title>CMS | Faculty Portal</title>
     <link rel="stylesheet" href="../Student/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Student/css/Student_Portal.css">
+    <link rel="stylesheet" href="../css/faculty_portal.css">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon_package_v0.16/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_package_v0.16/favicon-16x16.png">
     <link rel="manifest" href="../favicon_package_v0.16/site.webmanifest">

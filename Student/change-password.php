@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
                           </div>
                           <div class="form-group text-center">
                             <div class="col-sm-12 d-flex justify-content-center"  style="padding-top: 15px;">
-                            <button type="submit" name="submit" class="btn btn-success ">Save Profile</button>
+                            <button type="submit" name="submit" class="btn btn-success ">Save Changes</button>
                         </div>
                       </div>
                      </form>

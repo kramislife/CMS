@@ -97,8 +97,8 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="carousel">
                     <div class="images-wrapper">
-                        <img src=".//img/complaints.png" class="image img-1 show" alt="">
-                        <img src=".//img/school.jpg" class="image img-2" alt="">
+                        <img src=".//img/complaint1.png" class="image img-1 show" alt="">
+                        <img src=".//img/complaints.jpg" class="image img-2" alt="">
                         <img src=".//img/PUP.jpg" class="image img-3" alt="">
                     </div>
                 </div>
