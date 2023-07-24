@@ -131,15 +131,16 @@ if (isset($_POST['submit'])) {
                       }
                       ?>
 
-                  <div class="form-group">
+                <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"><strong style="color: black">Complaint Type</strong></label>
                     <div class="col-sm-6">
                       <select name="complainttype" id="complaint" class="form-control" required="">
                         <option disabled selected value="">Choose type of Complaint</option>
                         <option value="Discrimination">Discrimination</option>
-                        <option value="GradingReport">Grading Report</option>
-                        <option value="MedicalReport">Medical Report</option>
-                        <option value="FacilityReport">Facility Report</option>
+                        <option value="Academic Issues">Academic Issues</option>
+                        <option value="Medical Report">Medical Report</option>
+                        <option value="Facility And Infrastructure">Facility And Infrastructure</option>
+                        <option value="Campus Safety">Campus Safety</option>
                         <option value="Others">Others</option>
                       </select>
                     </div>
@@ -305,6 +306,7 @@ if (isset($_POST['submit'])) {
   });
 });
 
+
 function validateFiles(input) {
   var files = input.files;
 
@@ -359,9 +361,11 @@ function validateFiles(input) {
     } else if (supportedImageTypes.includes(file.type) && (extension === 'jpg' || extension === 'jpeg')) {
       // Valid image (jpg/jpeg)
       console.log('Valid image: ' + file.name);
+      document.getElementById('errorMsg').textContent = ''; // Clear the error message for a valid image
     } else if (supportedPdfTypes.includes(file.type) && extension === 'pdf') {
       // Valid PDF
       console.log('Valid PDF: ' + file.name);
+      document.getElementById('errorMsg').textContent = ''; // Clear the error message for a valid PDF
     } else {
       // Invalid file
       input.value = '';
@@ -374,7 +378,12 @@ function validateFiles(input) {
   }
 }
 
+// Add an event listener to clear the error message when a valid file is selected
+document.getElementById('fileInput').addEventListener('change', function () {
+  document.getElementById('errorMsg').textContent = '';
+});
 </script>
+
 
   <script src="../assets/js/jquery.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>

@@ -14,18 +14,17 @@ if (isset($_POST['submit'])) {
     $newPassword = $_POST['newPassword'];
     $confirmPassword = $_POST['confirmPassword'];
 
-    // Define the password requirements using regular expressions
-    $uppercaseRegex = '/[A-Z]/';        // At least one uppercase letter
-    $lowercaseRegex = '/[a-z]/';        // At least one lowercase letter
-    $numericRegex = '/[0-9]/';           // At least one numeric digit
-    $specialCharRegex = '/[^A-Za-z0-9]/'; // At least one special character
+    $uppercaseRegex = '/[A-Z]/';      
+    $lowercaseRegex = '/[a-z]/';        
+    $numericRegex = '/[0-9]/';           
+    $specialCharRegex = '/[^A-Za-z0-9]/'; 
 
     $query = "SELECT Password FROM student_login WHERE UserID = '" . $_SESSION['UserID'] . "'";
     $result = mysqli_query($conn, $query);
 
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($oldPassword, $row['Password'])) {
-            if ($newPassword != $oldPassword) { // Check if the new password is different from the old password
+            if ($newPassword != $oldPassword) { 
                 if ($newPassword == $confirmPassword) {
                     if (
                         preg_match($uppercaseRegex, $newPassword) &&

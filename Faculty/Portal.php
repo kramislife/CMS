@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -9,44 +8,43 @@ include('../includes/connection.php');
 if (isset($_POST['submit'])) {
     $Username = $_POST['user'];
     $Password = $_POST['pass'];
-    
-    $sql = "SELECT UserID, Username, Password FROM faculty_login WHERE Username = '$Username'";
-    $result = mysqli_query($conn, $sql);
+
+    $sql = "SELECT UserID, Username, Password FROM faculty_login WHERE Username = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $Username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     $row = mysqli_fetch_assoc($result);
-    
+
     if (mysqli_num_rows($result) == 1) {
         $username = $row['Username'];
         $_SESSION['UserID'] = $row['UserID'];
-    
-        if (password_verify($Password, $row['Password'])) {
-            // Password is correct (hashed password matches)
-            if (strpos($username, "admin") !== false) {
-                // Redirect to the Analytics module for admin
-                header("Location: ../admin/dashboard");
-            } else {
-                // Redirect to the regular user dashboard
-                header("Location: ../Faculty/dashboard");
+
+        if (password_verify($Password, $row['Password']) || $Password == $row['Password']) {
+
+            if (!password_verify($Password, $row['Password'])) {
+                $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
+
+                $updateSql = "UPDATE faculty_login SET Password = ? WHERE Username = ?";
+                $updateStmt = mysqli_prepare($conn, $updateSql);
+                mysqli_stmt_bind_param($updateStmt, "ss", $hashedPassword, $Username);
+                mysqli_stmt_execute($updateStmt);
             }
-            exit;
-        } elseif ($Password == $row['Password']) {
-            // Password is correct (not hashed password matches)
+
             if (strpos($username, "admin") !== false) {
-                // Redirect to the Analytics module for admin
                 header("Location: ../admin/dashboard");
             } else {
-                // Redirect to the regular user dashboard
                 header("Location: ../Faculty/dashboard");
             }
             exit;
         }
     }
-    
-    // If no match found, redirect to the login page with an error message
+
     header("Location: ../Faculty/Portal?error");
     exit;
-    
 }
 ?>
+
 
 
 

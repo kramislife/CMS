@@ -236,31 +236,42 @@ $successMessage = '';
           extend: 'copy',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
-          }
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
+      
         },
         {
           extend: 'excel',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
-          }
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
         },
         {
           extend: 'pdf',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
-          }
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
         },
         {
           extend: 'csv',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
-          }
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
         },
         {
           extend: 'print',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
-          }
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
         },
       ],
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -272,6 +283,7 @@ $successMessage = '';
     });
   });
 </script>
+
           
   <script src="../assets/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="../assets/js/jquery.dcjqaccordion.2.7.js"></script>
@@ -280,5 +292,6 @@ $successMessage = '';
   <script src="../assets/js/common-scripts.js"></script>
 </body>
 </html> 
+
 
 

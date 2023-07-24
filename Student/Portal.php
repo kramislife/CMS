@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 error_reporting(0);
@@ -20,14 +19,22 @@ if (isset($_POST['submit'])) {
     if (mysqli_num_rows($result) == 1) {
         $_SESSION['UserID'] = $row['UserID'];
 
-        if (password_verify($password, $row['Password'])) {
-            header("Location: ../Student/Dashboard");
-            exit;
-        } else if ($password == $row['Password']) {
+        if (password_verify($password, $row['Password']) || $password == $row['Password']) {
+            
+            if (!password_verify($password, $row['Password'])) {
+
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                $updateSql = "UPDATE student_login SET Password = ? WHERE StudentNumber = ?";
+                $updateStmt = mysqli_prepare($conn, $updateSql);
+                mysqli_stmt_bind_param($updateStmt, "ss", $hashedPassword, $studentNumber);
+                mysqli_stmt_execute($updateStmt);
+            }
             header("Location: ../Student/Dashboard");
             exit;
         }
     }
+
     header("Location: ../Student/Portal?error");
     exit;
 }
@@ -92,7 +99,7 @@ if (isset($_POST['submit'])) {
                     <div class="images-wrapper">
                         <img src=".//img/complaints.png" class="image img-1 show" alt="">
                         <img src=".//img/school.jpg" class="image img-2" alt="">
-                        <img src=".//img/cat.jpg" class="image img-3" alt="">
+                        <img src=".//img/PUP.jpg" class="image img-3" alt="">
                     </div>
                 </div>
             </div>

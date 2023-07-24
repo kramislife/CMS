@@ -320,7 +320,7 @@ function validateFiles(input) {
     var audio = document.createElement('audio');
     var supportedVideoTypes = ['video/mp4'];
     var supportedAudioTypes = ['audio/mpeg'];
-    var supportedImageTypes = ['image/jpeg', 'image/jpg,'];
+    var supportedImageTypes = ['image/jpeg', 'image/jpg'];
     var supportedPdfTypes = ['application/pdf'];
 
     if (supportedVideoTypes.includes(file.type) && extension === 'mp4') {
@@ -364,9 +364,11 @@ function validateFiles(input) {
     } else if (supportedImageTypes.includes(file.type) && (extension === 'jpg' || extension === 'jpeg')) {
       // Valid image (jpg/jpeg)
       console.log('Valid image: ' + file.name);
+      document.getElementById('errorMsg').textContent = ''; // Clear the error message for a valid image
     } else if (supportedPdfTypes.includes(file.type) && extension === 'pdf') {
       // Valid PDF
       console.log('Valid PDF: ' + file.name);
+      document.getElementById('errorMsg').textContent = ''; // Clear the error message for a valid PDF
     } else {
       // Invalid file
       input.value = '';
@@ -378,8 +380,12 @@ function validateFiles(input) {
     }
   }
 }
-</script>
 
+// Add an event listener to clear the error message when a valid file is selected
+document.getElementById('fileInput').addEventListener('change', function () {
+  document.getElementById('errorMsg').textContent = '';
+});
+</script>
 
   <script src="../assets/js/jquery.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
