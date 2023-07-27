@@ -136,11 +136,11 @@ a, a:hover, a:focus {
 }
 ::selection {
 
-    background: #68dff0;
+    background: #a91f1f;
     color: #fff;
 }
 ::-moz-selection {
-    background: #68dff0;
+    background: #a91f1f;
     color: #fff;
 }
 

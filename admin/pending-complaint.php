@@ -79,7 +79,7 @@ $errormsg = '';
                   </thead>
                   <tbody>
                     <?php
-                     $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'Pending' OR Status IS NULL) AND Flag = '0' ORDER BY RegDate DESC");
+                     $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'Pending' OR Status IS NULL) AND isDeleted = '0' ORDER BY RegDate DESC");
                    
                     if (mysqli_num_rows($query) > 0) {
                       while ($row = mysqli_fetch_array($query)) {

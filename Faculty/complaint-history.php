@@ -18,7 +18,7 @@ $errormsg = '';
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS | Complaint</title>
+  <title>CMS | Complaint History</title>
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -45,7 +45,7 @@ $errormsg = '';
   <section id="container">
     <section id="main-content">
       <section class="wrapper">
-        <h4 style="padding-bottom:10px; padding-top:10px; font-weight:bolder; font-family: 'Times New Roman', Times, serif;">COMPLAINT RECORDS</h4>
+        <h4 style="padding-bottom:10px; padding-top:10px; font-weight:bolder; font-family: 'Times New Roman', Times, serif;">COMPLAINT HISTORY</h4>
         <div class="row mt">
           <div class="col-lg-12">
           
@@ -80,7 +80,7 @@ $errormsg = '';
                 <tbody>
                   <?php
                 $userId = $_SESSION['UserID'];
-                $query = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='$userId' AND Flag = '0' ORDER BY 
+                $query = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='$userId' AND isDeleted = '0' ORDER BY 
                 CASE 
                 WHEN status = 'Pending' OR Status is NULL THEN 1
                 WHEN status = 'in process' THEN 2

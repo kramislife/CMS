@@ -60,8 +60,7 @@ if (isset($_POST['checking_edit_btn'])) {
 }
 
 // EDIT FUNCTION IN MODAL CONFIRMED COMPLAINTS
-// EDIT FUNCTION IN MODAL CONFIRMED COMPLAINTS
-if (isset($_POST['checking_update_btn'])) { // Removed space before checking_update_btn
+if (isset($_POST['checking_update_btn'])) { 
   $complaintNumber = $_POST['complaintNumber'];
 
   $query = "SELECT * FROM complaints WHERE ComplaintNumber = '$complaintNumber'";

@@ -18,7 +18,7 @@ $errormsg = '';
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS | Complaint</title>
+  <title>CMS | Complaint Summary</title>
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -384,31 +384,31 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
       {
         extend: 'copy',
         exportOptions: {
-          columns: [0, 2, 3, 4, 5]
+          columns: [0, 1, 2, 3, 4, 5]
         }
       },
       {
         extend: 'excel',
         exportOptions: {
-          columns: [0, 2, 3, 4, 5]
+          columns: [0, 1, 2, 3, 4, 5]
         }
       },
       {
         extend: 'pdf',
         exportOptions: {
-          columns: [0, 2, 3, 4, 5]
+          columns: [0, 1, 2, 3, 4, 5]
         }
       },
       {
         extend: 'csv',
         exportOptions: {
-          columns: [0, 2, 3, 4, 5]
+          columns: [0, 1, 2, 3, 4, 5]
         }
       },
       {
         extend: 'print',
         exportOptions: {
-          columns: [0, 2, 3, 4, 5]
+          columns: [0, 1, 2, 3, 4, 5]
         }
       },
     ],

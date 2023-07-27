@@ -17,8 +17,17 @@ if (isset($_POST['deleteData'])) {
   $id = $_POST['deleteID'];
   $id = mysqli_real_escape_string($conn, $id);
 
-  // Delete from the 'complaints' table
-  $deleteQuery = "UPDATE complaints SET Flag = 1 WHERE ComplaintNumber = '$id'";
+  $statusQuery = "SELECT Status FROM complaints WHERE ComplaintNumber = '$id'";
+  $statusResult = mysqli_query($conn, $statusQuery);
+  $statusRow = mysqli_fetch_assoc($statusResult);
+  $status = $statusRow['Status'];
+
+  if (is_null($status)) {
+      $deleteQuery = "DELETE FROM complaints WHERE ComplaintNumber = '$id'";
+  } else {
+      $deleteQuery = "UPDATE complaints SET isDeleted = 1 WHERE ComplaintNumber = '$id'";
+  }
+
   $deleteResult = mysqli_query($conn, $deleteQuery);
 
   if ($deleteResult) {
@@ -30,8 +39,13 @@ if (isset($_POST['deleteData'])) {
   header("Location: complaint-history");
   exit;
 }
+
   
 ?>
+
+
+
+
 
 
 
