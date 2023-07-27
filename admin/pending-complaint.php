@@ -117,7 +117,16 @@ $errormsg = '';
 
                           <td data-label="Name:"><?php echo htmlentities($row['ComplainantName']); ?></td>
                           <td data-label="Email:"><?php echo htmlentities($row['Email']); ?></td>
-                          <td data-label="Complaint Type:"><?php echo htmlentities($row['ComplaintType']); ?></td>
+                          <td data-label="Complaint Type:">
+                              <?php
+                                $complaintType = htmlentities($row['ComplaintType']);
+                                if ($complaintType === "Others") {
+                                  echo "Others - " . htmlentities($row['Others']);
+                                } else {
+                                  echo $complaintType;
+                                }
+                              ?>
+                            </td>
 
                           <td data-label="Registration Date:"><?php echo htmlentities($row['RegDate']); ?></td>
                           <td data-label="Complaint Update:"><?php echo htmlentities($row['Updated_Time']); ?></td>
@@ -251,10 +260,12 @@ $errormsg = '';
   <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 
 
-<script>
+  <script>
   $(document).ready(function () {
+    var originalStatus; // original status
+
     $('.edit_btn').on('click', function () {
-      var complaintNumber = $(this).closest('tr').find('.complaintNumber').text();
+        var complaintNumber = $(this).closest('tr').find('.complaintNumber').text();
 
       $.ajax({
         url: 'todays_data.php',
@@ -279,7 +290,7 @@ $errormsg = '';
     });
 
     $('#editForm').submit(function (e) {
-      e.preventDefault();
+       e.preventDefault();
 
       var complaintNumber = $('#editComplaintNumber').text();
       var status = $('#editStatus').val();
@@ -295,7 +306,7 @@ $errormsg = '';
           var data = JSON.parse(response);
           if (data.success) {
             $('#editModal').modal('hide');
-            window.location.href = 'pending-complaint'; 
+            window.location.href = 'confirmed-complaint'; 
           } else {
             console.log('Failed to update complaint status.');
           }
@@ -309,25 +320,39 @@ $errormsg = '';
     function updateEditModal(data) {
       var editModalBody = $('#editModal .modal-body');
       editModalBody.find('#editComplaintNumber').text(data.complaintNumber);
-      editModalBody.find('#editName').text(data.name);
+        editModalBody.find('#editName').text(data.name);
       editModalBody.find('#editEmail').text(data.email);
       editModalBody.find('#editComplaintType').text(data.complaintType);
       editModalBody.find('#editOthers').text(data.others); 
-      editModalBody.find('#editComplaintDetails').text(data.ComplaintDetails);
+      editModalBody.find('#editComplaintDetails').text(data.ComplaintDetails);    
       if (data.complaintFile) {
         editModalBody.find('#editCompFile').html('<a href="../complaintDocs/' + encodeURIComponent(data.complaintFile) + '" target="_blank">View File</a>');
       } else {
         editModalBody.find('#editCompFile').text('None');
       }
 
+
+      originalStatus = data.status;
+
       // Status validation
       var status = data.status === "NULL" || data.status === "Pending" ? "Pending" : data.status;
-editModalBody.find('#editStatus').val(status);
-var statusDropdown = editModalBody.find('#editStatus');
-statusDropdown.find('option[value="Pending"]').prop('hidden', status === 'In Process');
-statusDropdown.find('option[value="In Process"]').prop('hidden', false);
-statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending');
+      editModalBody.find('#editStatus').val(status);
+      var statusDropdown = editModalBody.find('#editStatus');
+      statusDropdown.find('option[value="Pending"]').prop('hidden', status === 'In Process');
+      statusDropdown.find('option[value="In Process"]').prop('hidden', false);
+      statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending');
 
+      function updateButtonState() {
+        var selectedStatus = statusDropdown.val();
+        var isStatusChanged = selectedStatus !== originalStatus;
+        $('#updateBtn').prop('disabled', !isStatusChanged);
+      }
+
+      updateButtonState();
+
+      statusDropdown.on('change', function() {
+        updateButtonState();
+      });
 
       if (status === 'Closed') {
         statusDropdown.addClass('disabled');
@@ -341,6 +366,8 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
     }
   });
 </script>
+
+
 
 
 

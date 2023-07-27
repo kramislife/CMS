@@ -59,8 +59,8 @@ include("../includes/check_session.php");
                   ?>
               </div>
               <div class="card-footer d-flex align-items-center justify-content-between">
-                  <!-- <a class="small text-white stretched-link" href="complaint-history">View Details</a>
-                  <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
+                  <a class="small text-white stretched-link" href="pending-complaint">View Details</a>
+                  <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
               </div>
           </div>
       </div>
@@ -82,8 +82,8 @@ include("../includes/check_session.php");
             ?>
         </div>
         <div class="card-footer d-flex align-items-center justify-content-between">
-            <!-- <a class="small text-white stretched-link" href="complaint-history">View Details</a>
-            <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
+         <a class="small text-white stretched-link" href="confirmed-complaint">View Details</a>
+            <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
         </div>
     </div>
 </div>
@@ -106,8 +106,8 @@ include("../includes/check_session.php");
             ?>
         </div>
         <div class="card-footer d-flex align-items-center justify-content-between">
-             <!-- <a class="small text-white stretched-link" href="complaint-history">View Details</a>
-                <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
+       <a class="small text-white stretched-link" href="closed-complaint">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
         </div>
     </div>
 </div>

@@ -61,35 +61,44 @@ if (isset($_POST['checking_edit_btn'])) {
     exit;
   }
 
-// DELETE FUNCTION IN MODAL
+
 if (isset($_POST['deleteData'])) {
-  $id = $_POST['deleteID'];
-  $id = mysqli_real_escape_string($conn, $id);
+    $id = $_POST['deleteID'];
+    $id = mysqli_real_escape_string($conn, $id);
 
-  $statusQuery = "SELECT Status FROM complaints WHERE ComplaintNumber = '$id'";
-  $statusResult = mysqli_query($conn, $statusQuery);
-  $statusRow = mysqli_fetch_assoc($statusResult);
-  $status = $statusRow['Status'];
+    $statusQuery = "SELECT Status FROM complaints WHERE ComplaintNumber = '$id'";
+    $statusResult = mysqli_query($conn, $statusQuery);
+    $statusRow = mysqli_fetch_assoc($statusResult);
+    $status = $statusRow['Status'];
 
-  if (is_null($status)) {
-      $deleteQuery = "DELETE FROM complaints WHERE ComplaintNumber = '$id'";
-  } else {
-      $deleteQuery = "UPDATE complaints SET isDeleted = 1 WHERE ComplaintNumber = '$id'";
-  }
+    if (is_null($status) || $status === 'Pending') {
+        $deleteQuery = "DELETE FROM complaints WHERE ComplaintNumber = '$id'";
+    } else {
+        $deleteQuery = "UPDATE complaints SET isDeleted = 1 WHERE ComplaintNumber = '$id'";
+    }
 
-  $deleteResult = mysqli_query($conn, $deleteQuery);
+    $deleteResult = mysqli_query($conn, $deleteQuery);
 
-  if ($deleteResult) {
-      $_SESSION['successmsg'] = 'Complaint Deleted Successfully!';
-  } else {
-      $_SESSION['errormsg'] = 'Failed to Delete Complaint.';
-  }
+    if ($deleteResult) {
+        $_SESSION['successmsg'] = 'Complaint Deleted Successfully!';
+    } else {
+        $_SESSION['errormsg'] = 'Failed to Delete Complaint.';
+    }
 
-  header("Location: complaint-history");
-  exit;
+    // Determine the appropriate location for redirection based on the complaint status
+    if ($status === 'Pending' || is_null($status)) {
+        header("Location: pending-complaint");
+    } elseif ($status === 'Closed') {
+        header("Location: closed-complaint");
+    } else {
+        // Redirect to a default page if the status is neither 'Pending' nor 'Closed'
+        header("Location: complaint-history");
+    }
+
+    exit;
 }
 
-  
+
   
 ?>
 

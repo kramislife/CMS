@@ -82,12 +82,7 @@ $errormsg = '';
                   </thead>
                   <tbody>
                     <?php
-                      $query = mysqli_query($conn, "SELECT * FROM complaints ORDER BY 
-                      CASE 
-                          WHEN status = 'Pending' OR Status is NULL THEN 1
-                          WHEN status = 'in process' THEN 2
-                          WHEN status = 'closed' THEN 3
-                      END, RegDate DESC");                     
+                      $query = mysqli_query($conn, "SELECT * FROM complaints ORDER BY Updated_Time DESC");                     
                     if (mysqli_num_rows($query) > 0) {
                       while ($row = mysqli_fetch_array($query)) {
                         ?>
@@ -124,7 +119,16 @@ $errormsg = '';
 
                           <td data-label="Name:"><?php echo htmlentities($row['ComplainantName']); ?></td>
                           <td data-label="Email:"><?php echo htmlentities($row['Email']); ?></td>
-                          <td data-label="Complaint Type:"><?php echo htmlentities($row['ComplaintType']); ?></td>
+                          <td data-label="Complaint Type:">
+                              <?php
+                                $complaintType = htmlentities($row['ComplaintType']);
+                                if ($complaintType === "Others") {
+                                  echo "Others - " . htmlentities($row['Others']);
+                                } else {
+                                  echo $complaintType;
+                                }
+                              ?>
+                            </td>
 
                           <td data-label="Registration Date:"><?php echo htmlentities($row['RegDate']); ?></td>
                           <td data-label="Complaint Update:"><?php echo htmlentities($row['Updated_Time']); ?></td>
