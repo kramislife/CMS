@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
                 <div class="forms-wrap">
                     <form action="" name="form" method="POST" autocomplete="off" class="sign-in-form">
                         <div class="logo">
-                            <img src="../img/CMS.png" alt="CMS">
+                            <img src="../img/CMS.jpg" alt="CMS">
                             <h1>e:Reklamo</h1>
                         </div>
                         

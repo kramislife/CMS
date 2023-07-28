@@ -118,7 +118,16 @@ $errormsg = '';
                         <span class="<?php echo $statusClass; ?>" style="<?php echo $statusStyle; ?>"><?php echo $statusText; ?></span>
                       </td>
 
-                      <td data-label="Complaint Type:"><?php echo htmlentities($row['ComplaintType']);?></td>
+                      <td data-label="Complaint Type:">
+                              <?php
+                                $complaintType = htmlentities($row['ComplaintType']);
+                                if ($complaintType === "Others") {
+                                  echo "Others - " . htmlentities($row['Others']);
+                                } else {
+                                  echo $complaintType;
+                                }
+                              ?>
+                            </td>
                       <td data-label="Registered Date:"><?php echo htmlentities($row['RegDate']);?></td>
 
                       <td data-label="Action:">

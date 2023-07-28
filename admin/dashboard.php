@@ -125,7 +125,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                               ?>
                             </span>
                     <div class="text-right" style="opacity: 0.5; font-size: 50px; align-items:center;">
-                <i class="fas fa-user-plus"></i>
+               <!-- <i class="fas fa-user-plus"></i> -->
               </div>
 
                   </div>
