@@ -1,7 +1,7 @@
 <?php
-session_start();
+
 error_reporting(0);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 include('../includes/connection.php');
 include("../includes/check_session.php");

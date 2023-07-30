@@ -204,9 +204,9 @@ a, a:hover, a:focus {
 .btn-theme:active,
 .btn-theme.active,
 .open .dropdown-toggle.btn-theme {
-  color: #fff;
-  background-color: #48bcb4;
-  border-color: #48bcb4;
+  color: #981313;
+  background-color: #0b1212;
+  border-color: #981313;
 }
 
 .btn-theme02 {

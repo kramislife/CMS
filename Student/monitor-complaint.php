@@ -45,7 +45,7 @@ $errormsg = '';
   <section id="container">
     <section id="main-content">
       <section class="wrapper">
-        <h4 style="padding-bottom:10px; padding-top:10px; font-weight:bolder; font-family: 'Times New Roman', Times, serif;">COMPLAINT HISTORY</h4>
+        <h4 style="padding-bottom:10px; padding-top:10px; font-weight:bolder; font-family: 'Times New Roman', Times, serif;">MONITOR COMPLAINT</h4>
         <div class="row mt">
           <div class="col-lg-12">
           
