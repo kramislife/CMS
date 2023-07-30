@@ -33,7 +33,14 @@ if (isset($_POST['submit'])) {
 
             if (strpos($username, "admin") !== false) {
                 header("Location: ../admin/dashboard");
-            } else {
+            } else if (strpos($username, "osas") !== false) {
+                header("Location: ../osas/dashboard");
+            } else if (strpos($username, "nurse") !== false) {
+                header("Location: ../clinic/dashboard");
+            } else if (strpos($username, "acad") !== false) {
+                header("Location: ../acad/dashboard");
+            }
+            else {
                 header("Location: ../Faculty/dashboard");
             }
             exit;
@@ -44,6 +51,7 @@ if (isset($_POST['submit'])) {
     exit;
 }
 ?>
+
 
 
 
