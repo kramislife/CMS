@@ -36,7 +36,7 @@ if (isset($_POST['deleteData'])) {
       $_SESSION['errormsg'] = 'Failed to Delete Complaint.';
   }
 
-  header("Location: complaint-history");
+  header("Location: monitor-complaint");
   exit;
 }
 

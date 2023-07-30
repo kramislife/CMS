@@ -57,7 +57,7 @@ while ($row = mysqli_fetch_array($query)) {
       </li>
 
       <li class="sub-menu">
-        <a href="naive">
+        <a href="register-complaint">
           <i class="fa fa-paperclip"></i>
           <span>Create Complaint</span>
         </a>

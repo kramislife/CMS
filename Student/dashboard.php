@@ -130,7 +130,7 @@ include("../includes/check_session.php");
         <div class="card-footer d-flex align-items-center justify-content-between">
             <?php
             if ($num1 > 0) {
-                echo '<a class="small text-white stretched-link" href="complaint-history">View Details</a>';
+                echo '<a class="small text-white stretched-link" href="monitor-complaint">View Details</a>';
                 echo '<div class="small text-white"><i class="fas fa-angle-right"></i></div>';
             }
             ?>
