@@ -53,8 +53,7 @@ if (isset($_POST['change_pass'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password</title>
-    <link rel="stylesheet" href="../Faculty/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Faculty/css/Faculty_Portal.css">
+    <link rel="stylesheet" href="../Student/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container flex-column" style="font-family: 'Times New Roman', Times, serif;">
@@ -101,8 +100,6 @@ if (isset($_POST['change_pass'])) {
     // Get the input fields and the password requirements message elements
     var newPasswordInput = document.getElementById('newPassword');
     var newPasswordRequirements = document.getElementById('newPasswordRequirements');
-    var confirmPasswordInput = document.getElementById('confirmPassword');
-    var confirmPasswordRequirements = document.getElementById('confirmPasswordRequirements');
 
     // Function to display the password requirements message for newPassword
     function showNewPasswordRequirements() {

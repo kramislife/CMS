@@ -30,10 +30,6 @@ $errormsg = '';
    <link rel="stylesheet" href="//cdn.datatables.net/autofill/2.5.3/css/autoFill.bootstrap4.min.css"> 
    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.bootstrap4.min.css">
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
- 
-  
 
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
@@ -82,13 +78,14 @@ $errormsg = '';
                     </tr>
                   </thead>
                   <tbody>
-                    <?php
+
+                  <?php
                      $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0' ORDER BY 
                      CASE 
                          WHEN status = 'in process' THEN 1
                          WHEN status = 'closed' THEN 2
                      END, Updated_Time DESC");
-
+                   
                     if (mysqli_num_rows($query) > 0) {
                       while ($row = mysqli_fetch_array($query)) {
                         ?>
@@ -125,12 +122,21 @@ $errormsg = '';
 
                           <td data-label="Name:"><?php echo htmlentities($row['ComplainantName']); ?></td>
                           <td data-label="Email:"><?php echo htmlentities($row['Email']); ?></td>
-                          <td data-label="Complaint Type:"><?php echo htmlentities($row['ComplaintType']); ?></td>
+                          <td data-label="Complaint Type:">
+                              <?php
+                                $complaintType = htmlentities($row['ComplaintType']);
+                                if ($complaintType === "Others") {
+                                  echo "Others - " . htmlentities($row['Others']);
+                                } else {
+                                  echo $complaintType;
+                                }
+                              ?>
+                            </td>
 
                           <td data-label="Registration Date:"><?php echo htmlentities($row['RegDate']); ?></td>
                           <td data-label="Complaint Update:"><?php echo htmlentities($row['Updated_Time']); ?></td>
                           <td data-label="Action:">
-                            <button type="button" class="btn btn-primary fa fa-pencil-square-o fa-lg update_btn" name="editData" data-toggle="modal" data-target="#editModal"></button>
+                            <button type="button" class="btn btn-primary fa fa-pencil-square-o fa-lg edit_btn" name="editData" data-toggle="modal" data-target="#editModal"></button>
                             <button type="button" class="btn btn-danger fa fa-trash-o fa-lg delete_btn" data-toggle="modal" data-target="#deleteModal"></button>
                           </td>
 
@@ -154,7 +160,7 @@ $errormsg = '';
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Update Complaint</h4>
                   </div>
-                  <form id="updateForm" action="todays_data.php" method="POST">
+                  <form id="editForm" action="record_data.php" method="POST">
                     <div class="modal-body">
                       <input type="hidden" name="editID" id="editID">
 
@@ -221,7 +227,7 @@ $errormsg = '';
               </div>
             </div>
 
-            <!-- Delete Modal -->
+           <!-- Delete Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -259,16 +265,18 @@ $errormsg = '';
   <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 
 
-<script>
+  <script>
   $(document).ready(function () {
-    $('.update_btn').on('click', function () {
-      var complaintNumber = $(this).closest('tr').find('.complaintNumber').text();
+    var originalStatus; // original status
+
+    $('.edit_btn').on('click', function () {
+        var complaintNumber = $(this).closest('tr').find('.complaintNumber').text();
 
       $.ajax({
         url: 'todays_data.php',
         type: 'POST',
         data: {
-          checking_update_btn: true,
+          checking_edit_btn: true,
           complaintNumber: complaintNumber
         },
         success: function (response) {
@@ -286,8 +294,8 @@ $errormsg = '';
       });
     });
 
-    $('#updateForm').submit(function (e) {
-      e.preventDefault();
+    $('#editForm').submit(function (e) {
+       e.preventDefault();
 
       var complaintNumber = $('#editComplaintNumber').text();
       var status = $('#editStatus').val();
@@ -317,25 +325,39 @@ $errormsg = '';
     function updateEditModal(data) {
       var editModalBody = $('#editModal .modal-body');
       editModalBody.find('#editComplaintNumber').text(data.complaintNumber);
-      editModalBody.find('#editName').text(data.name);
+        editModalBody.find('#editName').text(data.name);
       editModalBody.find('#editEmail').text(data.email);
       editModalBody.find('#editComplaintType').text(data.complaintType);
       editModalBody.find('#editOthers').text(data.others); 
-      editModalBody.find('#editComplaintDetails').text(data.ComplaintDetails);
+      editModalBody.find('#editComplaintDetails').text(data.ComplaintDetails);    
       if (data.complaintFile) {
         editModalBody.find('#editCompFile').html('<a href="../complaintDocs/' + encodeURIComponent(data.complaintFile) + '" target="_blank">View File</a>');
       } else {
         editModalBody.find('#editCompFile').text('None');
       }
 
+
+      originalStatus = data.status;
+
       // Status validation
       var status = data.status === "NULL" || data.status === "Pending" ? "Pending" : data.status;
-editModalBody.find('#editStatus').val(status);
-var statusDropdown = editModalBody.find('#editStatus');
-statusDropdown.find('option[value="Pending"]').prop('hidden', status === 'In Process');
-statusDropdown.find('option[value="In Process"]').prop('hidden', false);
-statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending');
+      editModalBody.find('#editStatus').val(status);
+      var statusDropdown = editModalBody.find('#editStatus');
+      statusDropdown.find('option[value="Pending"]').prop('hidden', status === 'In Process');
+      statusDropdown.find('option[value="In Process"]').prop('hidden', false);
+      statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending');
 
+      function updateButtonState() {
+        var selectedStatus = statusDropdown.val();
+        var isStatusChanged = selectedStatus !== originalStatus;
+        $('#updateBtn').prop('disabled', !isStatusChanged);
+      }
+
+      updateButtonState();
+
+      statusDropdown.on('change', function() {
+        updateButtonState();
+      });
 
       if (status === 'Closed') {
         statusDropdown.addClass('disabled');
@@ -351,8 +373,7 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
 </script>
 
 
-
- <!-- DELETE MODAL SCRIPT -->
+<!-- DELETE MODAL SCRIPT -->
 <script>
   $(document).ready(function () {
     // Set delete_id value when the delete button is clicked
@@ -375,7 +396,7 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
       }
     });
   });
-</script>
+</script> 
 
 <!--DATA TABLES -->
 <script>
@@ -411,7 +432,6 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
   <script src="../assets/js/common-scripts.js"></script>
 </body> 
 </html>
-
 
 
 

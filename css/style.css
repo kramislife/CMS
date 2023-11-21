@@ -30,7 +30,7 @@ h1 {
     position: absolute;
     width: 149px;
     height: 149px;
-    left: 74.5%;
+    left: 72.5%;
     top: calc(50% - 149px/2 - 260.5px);
 }
 
@@ -82,3 +82,6 @@ a:link { text-decoration: none; }
     background-color: #1e549e;;
     color: rgb(232, 225, 225);  
 }
+
+
+

@@ -82,7 +82,11 @@ if (isset($_POST['submit'])) {
 <body>
 <section id="container">
 
+<<<<<<< HEAD
 <?php include("../osas/sidebar.php"); ?>
+=======
+<?php include("../admin/sidebar.php"); ?>
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
 <?php include("../includes/header.php"); ?>  
 
       <section id="main-content">

@@ -18,7 +18,11 @@ $errormsg = '';
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <title>CMS | Complaint</title>
+=======
+  <title>CMS | Complaint Summary</title>
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -39,7 +43,11 @@ $errormsg = '';
 </head>
 
 <body>
+<<<<<<< HEAD
   <?php include("../osas/sidebar.php"); ?>
+=======
+  <?php include("../admin/sidebar.php"); ?>
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
   <?php include("../includes/header.php"); ?>
 
   <section id="container">
@@ -82,12 +90,16 @@ $errormsg = '';
                   </thead>
                   <tbody>
                     <?php
+<<<<<<< HEAD
                       $query = mysqli_query($conn, "SELECT * FROM complaints ORDER BY 
                       CASE 
                           WHEN status = 'Pending' OR Status is NULL THEN 1
                           WHEN status = 'in process' THEN 2
                           WHEN status = 'closed' THEN 3
                       END, RegDate DESC");                     
+=======
+                      $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (ComplaintType = 'Academic Issues' OR ComplaintType = 'Discrimination') ORDER BY Updated_Time DESC");                     
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
                     if (mysqli_num_rows($query) > 0) {
                       while ($row = mysqli_fetch_array($query)) {
                         ?>
@@ -124,7 +136,20 @@ $errormsg = '';
 
                           <td data-label="Name:"><?php echo htmlentities($row['ComplainantName']); ?></td>
                           <td data-label="Email:"><?php echo htmlentities($row['Email']); ?></td>
+<<<<<<< HEAD
                           <td data-label="Complaint Type:"><?php echo htmlentities($row['ComplaintType']); ?></td>
+=======
+                          <td data-label="Complaint Type:">
+                              <?php
+                                $complaintType = htmlentities($row['ComplaintType']);
+                                if ($complaintType === "Others") {
+                                  echo "Others - " . htmlentities($row['Others']);
+                                } else {
+                                  echo $complaintType;
+                                }
+                              ?>
+                            </td>
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
 
                           <td data-label="Registration Date:"><?php echo htmlentities($row['RegDate']); ?></td>
                           <td data-label="Complaint Update:"><?php echo htmlentities($row['Updated_Time']); ?></td>
@@ -384,31 +409,51 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
       {
         extend: 'copy',
         exportOptions: {
+<<<<<<< HEAD
           columns: [0, 2, 3, 4, 5]
+=======
+          columns: [0, 1, 2, 3, 4, 5]
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         }
       },
       {
         extend: 'excel',
         exportOptions: {
+<<<<<<< HEAD
           columns: [0, 2, 3, 4, 5]
+=======
+          columns: [0, 1, 2, 3, 4, 5]
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         }
       },
       {
         extend: 'pdf',
         exportOptions: {
+<<<<<<< HEAD
           columns: [0, 2, 3, 4, 5]
+=======
+          columns: [0, 1, 2, 3, 4, 5]
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         }
       },
       {
         extend: 'csv',
         exportOptions: {
+<<<<<<< HEAD
           columns: [0, 2, 3, 4, 5]
+=======
+          columns: [0, 1, 2, 3, 4, 5]
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         }
       },
       {
         extend: 'print',
         exportOptions: {
+<<<<<<< HEAD
           columns: [0, 2, 3, 4, 5]
+=======
+          columns: [0, 1, 2, 3, 4, 5]
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         }
       },
     ],

@@ -50,7 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <title>CMS | Complaint</title>
+=======
+  <title>CMS | Faculty</title>
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -68,7 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
+<<<<<<< HEAD
 <?php include("../osas/sidebar.php"); ?>
+=======
+<?php include("../admin/sidebar.php"); ?>
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
 <?php include("../includes/header.php"); ?>  
 
 <?php
@@ -236,31 +244,62 @@ $successMessage = '';
           extend: 'copy',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
+<<<<<<< HEAD
           }
+=======
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
+      
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         },
         {
           extend: 'excel',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
+<<<<<<< HEAD
           }
+=======
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         },
         {
           extend: 'pdf',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
+<<<<<<< HEAD
           }
+=======
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         },
         {
           extend: 'csv',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
+<<<<<<< HEAD
           }
+=======
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         },
         {
           extend: 'print',
           exportOptions: {
             columns: [0, 1, 2, 3, 4]
+<<<<<<< HEAD
           }
+=======
+          },
+          filename: 'CMS | Faculty',
+          title: 'CMS | List of Faculty'
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
         },
       ],
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -272,6 +311,10 @@ $successMessage = '';
     });
   });
 </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
           
   <script src="../assets/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="../assets/js/jquery.dcjqaccordion.2.7.js"></script>
@@ -282,3 +325,7 @@ $successMessage = '';
 </html> 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2

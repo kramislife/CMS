@@ -33,7 +33,14 @@ if (isset($_POST['submit'])) {
 
             if (strpos($username, "admin") !== false) {
                 header("Location: ../admin/dashboard");
-            } else {
+            } else if (strpos($username, "osas") !== false) {
+                header("Location: ../osas/dashboard");
+            } else if (strpos($username, "nurse") !== false) {
+                header("Location: ../clinic/dashboard");
+            } else if (strpos($username, "acad") !== false) {
+                header("Location: ../acad/dashboard");
+            }
+            else {
                 header("Location: ../Faculty/dashboard");
             }
             exit;
@@ -48,15 +55,16 @@ if (isset($_POST['submit'])) {
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS | Student Portal</title>
+    <title>CMS | Faculty Portal</title>
     <link rel="stylesheet" href="../Student/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Student/css/Student_Portal.css">
+    <link rel="stylesheet" href="../css/faculty_portal.css">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon_package_v0.16/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_package_v0.16/favicon-16x16.png">
     <link rel="manifest" href="../favicon_package_v0.16/site.webmanifest">
@@ -70,7 +78,7 @@ if (isset($_POST['submit'])) {
                 <div class="forms-wrap">
                     <form action="" name="form" method="POST" autocomplete="off" class="sign-in-form">
                         <div class="logo">
-                            <img src="../img/CMS.png" alt="CMS">
+                            <img src="../img/CMS.jpg" alt="CMS">
                             <h1>e:Reklamo</h1>
                         </div>
                         

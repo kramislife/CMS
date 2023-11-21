@@ -44,76 +44,99 @@ include("../includes/check_session.php");
         <section class="wrapper">
         <h2 style="padding-bottom: 30px; padding-top: 10px;  font-weight:bolder; font-family: 'Times New Roman', Times, serif;">DASHBOARD</h2>
 
-                  <div class="col-md-3">
-                    <div class="card text-white bg-danger mb-3" style="height: 170px; font-size: larger;">
-                        <div class="card-body">
-                            Pending Complaints
-                            <?php
-                            $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID = '".$_SESSION['UserID']."' AND Flag = '0' AND Status IS NULL");
-                            $num1 = mysqli_num_rows($rt);
-                            echo '<h3>'.htmlentities($num1).'</h3>';
-                            ?>
-                        </div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                           <!-- <a class="small text-white stretched-link" href="complaint-history">View Details</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
-                        </div>
-                    </div>
-                </div>
-
-                  <div class="col-md-3">
-                <div class="card text-white bg-success mb-3" style="height: 170px; font-size: larger;">
-                    <div class="card-body">
-                        Approved Complaints
-                        <?php
-                        $status = "in Process";
-                        $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='".$_SESSION['UserID']."' AND Status='$status'");
-                        $num1 = mysqli_num_rows($rt);
-                        echo '<h3>'.htmlentities($num1).'</h3>';
-                        ?>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <!-- <a class="small text-white stretched-link" href="complaint-history">View Details</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-3">
-                <div class="card text-white bg-primary mb-3" style="height: 170px; font-size: larger;">
-                    <div class="card-body">
-                        Closed Complaints
-                        <?php
-                        $status = "Closed";
-                        $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='".$_SESSION['UserID']."' AND Status='$status' AND Flag ='0'");
-                        $num1 = mysqli_num_rows($rt);
-                        echo '<h3>'.htmlentities($num1).'</h3>';
-                        ?>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                         <!-- <a class="small text-white stretched-link" href="complaint-history">View Details</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
-                  <div class="card-body">
-                      Total Complaints
-                      <?php
-                      $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='".$_SESSION['UserID']."' AND Flag = '0'");
-                      $num1 = mysqli_num_rows($rt);
-                      echo '<h3>'.htmlentities($num1).'</h3>';
-                      ?>
-                  </div>
-                  <div class="card-footer d-flex align-items-center justify-content-between">
-                      <a class="small text-white stretched-link" href="complaint-history">View Details</a>
-                      <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                  </div>
+        <div class="col-md-3">
+          <div class="card text-white bg-danger mb-3" style="height: 170px; font-size: larger;">
+              <div class="card-body">
+                  Pending Complaints
+                  <?php
+                  $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID = '".$_SESSION['UserID']."' AND isDeleted = '0' AND Status IS NULL");
+                  $num1 = mysqli_num_rows($rt);
+                  if ($num1 > 0) {
+                      echo '<h1 class="mb-0 pt-3" style="font-size: 30px;">'.htmlentities($num1).'</h1>'; 
+                  } else {
+                      echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+                  }
+                  ?>
+              </div>
+              <div class="card-footer d-flex align-items-center justify-content-between">
+                  <a class="small text-white stretched-link" href="pending-complaint">View Details</a>
+                  <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
               </div>
           </div>
+      </div>
+
+
+      <div class="col-md-3">
+    <div class="card text-white bg-success mb-3" style="height: 170px; font-size: larger;">
+        <div class="card-body">
+            Approved Complaints
+            <?php
+            $status = "in Process";
+            $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='".$_SESSION['UserID']."' AND isDeleted = '0' AND Status='$status'");
+            $num1 = mysqli_num_rows($rt);
+            if ($num1 > 0) {
+                echo '<h1 class="mb-0 pt-3" style="font-size: 30px;">'.htmlentities($num1).'</h1>';
+            } else {
+                echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+            }
+            ?>
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+         <a class="small text-white stretched-link" href="confirmed-complaint">View Details</a>
+            <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-3">
+    <div class="card text-white bg-primary mb-3" style="height: 170px; font-size: larger;">
+        <div class="card-body">
+            Closed Complaints
+            <?php
+            $status = "Closed";
+            $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='".$_SESSION['UserID']."' AND Status='$status' AND isDeleted ='0'");
+            $num1 = mysqli_num_rows($rt);
+            if ($num1 > 0) {
+                echo '<h1 class="mb-0 pt-3" style="font-size: 30px;">'.htmlentities($num1).'</h1>';
+            } else {
+                echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+            }
+            ?>
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+       <a class="small text-white stretched-link" href="closed-complaint">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-3">
+    <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
+        <div class="card-body">
+            Total Complaints
+            <?php
+            $rt = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='".$_SESSION['UserID']."' AND isDeleted = '0'");
+            $num1 = mysqli_num_rows($rt);
+            if ($num1 > 0) {
+                echo '<h1 class="mb-0 pt-3" style="font-size: 30px;">'.htmlentities($num1).'</h1>';
+            } else {
+                echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+            }
+            ?>
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+            <?php
+            if ($num1 > 0) {
+                echo '<a class="small text-white stretched-link" href="monitor-complaint">View Details</a>';
+                echo '<div class="small text-white"><i class="fas fa-angle-right"></i></div>';
+            }
+            ?>
+        </div>
+    </div>
+</div>
 
             <div class="graphBox">
             <div class="box">    
@@ -137,7 +160,7 @@ include("../includes/check_session.php");
  
  <?php
 
-$complaints_query = "SELECT Status, COUNT(*) AS count FROM complaints WHERE ComplaintID = '".$_SESSION['UserID']."' AND Flag = '0' GROUP BY Status";
+$complaints_query = "SELECT Status, COUNT(*) AS count FROM complaints WHERE ComplaintID = '".$_SESSION['UserID']."' AND isDeleted = '0' GROUP BY Status";
 $complaints_result = mysqli_query($conn, $complaints_query);
 
 

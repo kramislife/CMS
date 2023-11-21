@@ -17,7 +17,7 @@ main {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-color: #e0dede;
+  background-color: #dddbdb;
   padding: 2rem;
   display: flex;
   align-items: center;
@@ -29,7 +29,7 @@ main {
   width: 100%;
   max-width: 1020px;
   height: 650px;
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 3.3rem;
   box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
 }
@@ -140,7 +140,7 @@ label {
   top: 50%;
   transform: translateY(-50%);
   font-size: 0.95rem;
-  color: #bbb;
+  color: #959191;
   pointer-events: none;
   transition: 0.4s;
 }
@@ -219,9 +219,9 @@ main.sign-up-mode .carousel {
 .carousel {
   position: absolute;
   height: 100%;
-  width: 55%;
-  left: 48%;
-  background-color: #510707;
+  width: 56%;
+  left: 47%;
+  background-color: #fefefe;
   border-radius: 2rem;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -237,13 +237,13 @@ main.sign-up-mode .carousel {
 }
 
 .image {
-  width: 100%;
-  height: 130%;
-  padding-top: 50px;
+  width: 101%;
+  height: 200%;
   grid-column: 1/2;
   grid-row: 1/2;
   opacity: 0;
   transition: opacity 0.3s, transform 0.5s;
+  border-radius: 20px;
 }
 
 .img-1 {

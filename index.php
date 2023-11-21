@@ -25,7 +25,7 @@ include ("./includes/connection.php")
 </head>
 <body>
     <img id="pup" src="img/pup.jpg" alt="PuP">
-    <img id="logo" src="img/logo.png" alt="PuP_Logo">
+    <img id="logo" class="img-circle" style="width: 150px;" src="img/CMS.jpg" alt="CMS_Logo">
     
   <h1>Complaint Management System</h1>
 

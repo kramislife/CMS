@@ -18,7 +18,7 @@ $errormsg = '';
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS | Complaint</title>
+  <title>CMS | Complaint History</title>
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -45,7 +45,7 @@ $errormsg = '';
   <section id="container">
     <section id="main-content">
       <section class="wrapper">
-        <h4 style="padding-bottom:10px; padding-top:10px; font-weight:bolder; font-family: 'Times New Roman', Times, serif;">COMPLAINT RECORDS</h4>
+        <h4 style="padding-bottom:10px; padding-top:10px; font-weight:bolder; font-family: 'Times New Roman', Times, serif;">CLOSED COMPLAINTS</h4>
         <div class="row mt">
           <div class="col-lg-12">
           
@@ -78,15 +78,11 @@ $errormsg = '';
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
-                $userId = $_SESSION['UserID'];
-                $query = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='$userId' AND Flag = '0' ORDER BY 
-                CASE 
-                WHEN status = 'Pending' OR Status is NULL THEN 1
-                WHEN status = 'in process' THEN 2
-                WHEN status = 'closed' THEN 3
-                END, RegDate DESC");
-                   
+                <?php
+                  $userId = $_SESSION['UserID'];
+                  $query = mysqli_query($conn, "SELECT * FROM complaints WHERE ComplaintID='$userId' AND isDeleted = '0' AND (Status = 'Closed') ORDER BY 
+                   RegDate DESC");
+       
                     if (mysqli_num_rows($query) > 0) {
                       while ($row = mysqli_fetch_array($query)) {
                         ?>
@@ -122,7 +118,16 @@ $errormsg = '';
                         <span class="<?php echo $statusClass; ?>" style="<?php echo $statusStyle; ?>"><?php echo $statusText; ?></span>
                       </td>
 
-                      <td data-label="Complaint Type:"><?php echo htmlentities($row['ComplaintType']);?></td>
+                      <td data-label="Complaint Type:">
+                              <?php
+                                $complaintType = htmlentities($row['ComplaintType']);
+                                if ($complaintType === "Others") {
+                                  echo "Others - " . htmlentities($row['Others']);
+                                } else {
+                                  echo $complaintType;
+                                }
+                              ?>
+                            </td>
                       <td data-label="Registered Date:"><?php echo htmlentities($row['RegDate']);?></td>
 
                       <td data-label="Action:">
@@ -256,11 +261,9 @@ $errormsg = '';
   <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 
 
-
 <!-- DELETE MODAL SCRIPT -->
 <script>
   $(document).ready(function () {
-    // Set delete_id value when the delete button is clicked
     $('.delete_btn').click(function(e) {
       e.preventDefault();
 
@@ -268,7 +271,6 @@ $errormsg = '';
       var status = $(this).closest('tr').find('td:nth-child(2)').text().trim();
     
       if (status === "In Process") {
-        // Show the message in the delete modal body
         $('#deleteModal .modal-body').html("<p style='color: black;'> Deletion for your complaints is not allowed because it is now <b>" + status +"</b></p>");
         $('#deleteModal .modal-footer').html('<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>');
         $('#deleteModal').modal('show');

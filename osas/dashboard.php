@@ -50,13 +50,18 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
   <body>
     <section id="container">
 
+<<<<<<< HEAD
 <?php include("../osas/sidebar.php"); ?>
+=======
+<?php include("../admin/sidebar.php"); ?>
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
 <?php include("../includes/header.php"); ?>  
 
                   <section id="main-content">
                     <section class="wrapper">
                     <h2 style="padding-bottom: 30px; padding-top: 10px;  font-weight:bolder; font-family: 'Times New Roman', Times, serif;">DASHBOARD</h2>
 
+<<<<<<< HEAD
                     <div class="row">
                     <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3" style="height: 170px; font-size:larger">
@@ -97,6 +102,14 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                 <div class="card-body">Pending Complaints
                 <?php
                   $pending_query = "SELECT * FROM complaints WHERE (Status = 'Pending' OR Status IS NULL) AND Flag = '0'";
+=======
+                  <div class="row">
+            <div class="col-md-3">
+              <div class="card text-white bg-danger mb-3" style="height: 170px; font-size: larger;">
+                <div class="card-body">Pending Complaints
+                <?php
+                 $pending_query = "SELECT * FROM complaints WHERE (Status = 'Pending' OR Status IS NULL) AND isDeleted = '0' AND (ComplaintType = 'Academic Issues' OR ComplaintType = 'Discrimination')";
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
                   $pending_query_run = mysqli_query($conn, $pending_query);
                   $pending_count = mysqli_num_rows($pending_query_run);
 
@@ -115,10 +128,17 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
             </div>
 
             <div class="col-md-3">
+<<<<<<< HEAD
               <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Confirmed Complaints
                 <?php
                   $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0'";
+=======
+              <div class="card text-white bg-success mb-3" style="height: 170px; font-size: larger;">
+                <div class="card-body">Confirmed Complaints
+                <?php
+                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0'AND (ComplaintType = 'Academic Issues' OR ComplaintType = 'Discrimination')";
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
                   $confirmed_query_run = mysqli_query($conn, $confirmed_query);
                   $confirmed_count = mysqli_num_rows($confirmed_query_run);
 
@@ -137,7 +157,45 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
             </div>
 
             <div class="col-md-3">
+<<<<<<< HEAD
               <div class="card text-white bg-danger mb-3" style="height: 170px; font-size: larger;">
+=======
+                <div class="card text-white bg-primary mb-3" style="height: 170px; font-size:larger">
+                  <div class="card-body">
+                  <span class="opacity-icon">
+                              Total Complaints
+                              <?php
+                                $total_query = ("SELECT COUNT(*) AS complaint_count FROM complaints WHERE (ComplaintType = 'Academic Issues' OR ComplaintType = 'Discrimination')");
+
+                                $total_query_run = mysqli_query($conn, $total_query);
+                                $total_complaints = 0;
+
+                                while ($complaint = mysqli_fetch_assoc($total_query_run)) {
+                                  $total_complaints += $complaint['complaint_count'];
+                                }
+
+                                if ($total_complaints > 0) {
+                                  echo '<h1 class="mb-0 pt-3" style="font-size: 30px;">'.$total_complaints.'</h1>';
+                                } else {
+                                  echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+                                }
+                              ?>
+                            </span>
+                    <div class="text-right" style="opacity: 0.5; font-size: 50px; align-items:center;">
+               <!-- <i class="fas fa-user-plus"></i> -->
+              </div>
+
+                  </div>
+                  <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="complaint-summary">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
                 <div class="card-body">Total Faculty Members
                 <?php
                   $total_query = "SELECT COUNT(*) AS faculty_count FROM faculty_login";
@@ -179,7 +237,11 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
 <script>
   <?php
 
+<<<<<<< HEAD
   $complaints_query = "SELECT ComplaintType, COUNT(*) AS count FROM complaints GROUP BY ComplaintType";
+=======
+  $complaints_query = "SELECT ComplaintType, COUNT(*) AS count FROM complaints WHERE (ComplaintType = 'Academic Issues' OR ComplaintType = 'Discrimination') GROUP BY ComplaintType";
+>>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
   $complaints_result = mysqli_query($conn, $complaints_query);
 
   $labels = array();

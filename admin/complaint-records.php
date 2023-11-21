@@ -17,7 +17,7 @@ $errormsg = '';
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS | Complaint</title>
+  <title>CMS | Complaint Records</title>
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
   <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -113,7 +113,7 @@ $errormsg = '';
                               $statusText = htmlentities($row['Status']);
                             } else {
                               $statusClass = "badge";
-                              $statusStyle = "background-color: gray; color: white;";
+                              $statusStyle = "background-color: #dc3545; font-size:13px;";
                               $statusText = htmlentities($row['Status']);
                             }
                             ?>
@@ -123,7 +123,16 @@ $errormsg = '';
 
                           <td data-label="Name:"><?php echo htmlentities($row['ComplainantName']); ?></td>
                           <td data-label="Email:"><?php echo htmlentities($row['Email']); ?></td>
-                          <td data-label="Complaint Type:"><?php echo htmlentities($row['ComplaintType']); ?></td>
+                          <td data-label="Complaint Type:">
+                              <?php
+                                $complaintType = htmlentities($row['ComplaintType']);
+                                if ($complaintType === "Others") {
+                                  echo "Others - " . htmlentities($row['Others']);
+                                } else {
+                                  echo $complaintType;
+                                }
+                              ?>
+                            </td>
 
                           <td data-label="Registration Date:"><?php echo htmlentities($row['RegDate']); ?></td>
                           <td data-label="Complaint Update:"><?php echo htmlentities($row['Updated_Time']); ?></td>
@@ -257,10 +266,12 @@ $errormsg = '';
   <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 
 
-<script>
+  <script>
   $(document).ready(function () {
+    var originalStatus; // Add this variable to store the original status
+
     $('.edit_btn').on('click', function () {
-      var complaintNumber = $(this).closest('tr').find('.complaintNumber').text();
+        var complaintNumber = $(this).closest('tr').find('.complaintNumber').text();
 
       $.ajax({
         url: 'record_data.php',
@@ -285,7 +296,7 @@ $errormsg = '';
     });
 
     $('#editForm').submit(function (e) {
-      e.preventDefault();
+       e.preventDefault();
 
       var complaintNumber = $('#editComplaintNumber').text();
       var status = $('#editStatus').val();
@@ -315,7 +326,7 @@ $errormsg = '';
     function updateEditModal(data) {
       var editModalBody = $('#editModal .modal-body');
       editModalBody.find('#editComplaintNumber').text(data.complaintNumber);
-      editModalBody.find('#editName').text(data.name);
+        editModalBody.find('#editName').text(data.name);
       editModalBody.find('#editEmail').text(data.email);
       editModalBody.find('#editComplaintType').text(data.complaintType);
       editModalBody.find('#editOthers').text(data.others); 
@@ -326,14 +337,31 @@ $errormsg = '';
         editModalBody.find('#editCompFile').text('None');
       }
 
+      // Set the originalStatus variable with the fetched status
+      originalStatus = data.status;
+
       // Status validation
       var status = data.status === "NULL" || data.status === "Pending" ? "Pending" : data.status;
-editModalBody.find('#editStatus').val(status);
-var statusDropdown = editModalBody.find('#editStatus');
-statusDropdown.find('option[value="Pending"]').prop('hidden', status === 'In Process');
-statusDropdown.find('option[value="In Process"]').prop('hidden', false);
-statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending');
+      editModalBody.find('#editStatus').val(status);
+      var statusDropdown = editModalBody.find('#editStatus');
+      statusDropdown.find('option[value="Pending"]').prop('hidden', status === 'In Process');
+      statusDropdown.find('option[value="In Process"]').prop('hidden', false);
+      statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending');
 
+      // Enable/disable "Update" button based on the selected status
+      function updateButtonState() {
+        var selectedStatus = statusDropdown.val();
+        var isStatusChanged = selectedStatus !== originalStatus;
+        $('#updateBtn').prop('disabled', !isStatusChanged);
+      }
+
+      // Initial call to set the button state
+      updateButtonState();
+
+      // Bind an event handler to the status dropdown to check for changes
+      statusDropdown.on('change', function() {
+        updateButtonState();
+      });
 
       if (status === 'Closed') {
         statusDropdown.addClass('disabled');
@@ -409,7 +437,6 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
   <script src="../assets/js/common-scripts.js"></script>
 </body> 
 </html>
-
 
 
 
