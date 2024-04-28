@@ -59,7 +59,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
 
                     <div class="row">
             <div class="col-md-3">
-              <div class="card text-white bg-danger mb-3" style="height: 170px; font-size: larger;">
+              <div class="card text-white bg-warning mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Pending Complaints
                 <?php
                   $pending_query = "SELECT * FROM complaints WHERE (Status = 'Pending' OR Status IS NULL) AND isDeleted = '0'";
@@ -84,7 +84,29 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
               <div class="card text-white bg-success mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Confirmed Complaints
                 <?php
-                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0'";
+                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process') AND Flag = '0'";
+                  $confirmed_query_run = mysqli_query($conn, $confirmed_query);
+                  $confirmed_count = mysqli_num_rows($confirmed_query_run);
+
+                  if ($confirmed_count > 0) {
+                    echo '<h1 class="mb-3 pt-3" style="font-size: 30px;">'.$confirmed_count.'</h1>';
+                  } else {
+                    echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+                  }
+                ?>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                  <a class="small text-white stretched-link" href="confirmed-complaint">View Details</a>
+                  <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card text-white bg-danger mb-1" style="height: 170px; font-size: larger;">
+                <div class="card-body">Deleted Complaints
+                <?php
+                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'Closed')";
                   $confirmed_query_run = mysqli_query($conn, $confirmed_query);
                   $confirmed_count = mysqli_num_rows($confirmed_query_run);
 

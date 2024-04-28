@@ -64,6 +64,7 @@ $trainingData = [
     ], 'type' => 'academic issues', 'language' => 'english'],
         // Discrimination complaints (English)
         ['keywords' => [
+            'bullied',
             'harassment',
             'prejudice',
             'inequality',
