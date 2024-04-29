@@ -84,7 +84,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
               <div class="card text-white bg-success mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Confirmed Complaints
                 <?php
-                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0' AND ComplaintType = 'Medical Report'";
+                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process') AND Flag = '0' AND ComplaintType = 'Medical Report'";
                   $confirmed_query_run = mysqli_query($conn, $confirmed_query);
                   $confirmed_count = mysqli_num_rows($confirmed_query_run);
 
@@ -103,12 +103,37 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
             </div>
 
             <div class="col-md-3">
+              <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
+                <div class="card-body">Cancelled Complaint
+                <?php
+                  $confirmed_query = "SELECT * FROM complaints WHERE ( Status = 'Closed') AND Flag = '0' AND ComplaintType = 'Medical Report'";
+                  $confirmed_query_run = mysqli_query($conn, $confirmed_query);
+                  $confirmed_count = mysqli_num_rows($confirmed_query_run);
+
+                  if ($confirmed_count > 0) {
+                    echo '<h1 class="mb-3 pt-3" style="font-size: 30px;">'.$confirmed_count.'</h1>';
+                  } else {
+                    echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+                  }
+                ?>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                  <a class="small text-white stretched-link" href="closed-complaint">View Details</a>
+                  <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+              </div>
+            </div>
+
+            
+
+            <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3" style="height: 170px; font-size:larger">
                   <div class="card-body">
                   <span class="opacity-icon">
                               Total Complaints
                               <?php
-                                $total_query = ("SELECT COUNT(*) AS complaint_count FROM complaints WHERE ComplaintType = 'Medical Report'");
+                               $total_query = "SELECT COUNT(*) AS complaint_count FROM complaints WHERE ComplaintType = 'Medical Report' AND Flag = '0'";
+
 
                                 $total_query_run = mysqli_query($conn, $total_query);
                                 $total_complaints = 0;
@@ -136,7 +161,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
               <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Total Faculty Members
                 <?php
@@ -156,7 +181,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>    
       
           <div class="graphBox">
@@ -177,31 +202,32 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
     
   
 <script>
-  <?php
+<?php
+$complaints_query = "SELECT IFNULL(Status, 'Pending') AS Status, COUNT(*) AS count FROM complaints WHERE ComplaintType = 'Medical Report' GROUP BY Status";
+$complaints_result = mysqli_query($conn, $complaints_query);
 
-  $complaints_query = "SELECT ComplaintType, COUNT(*) AS count FROM complaints WHERE ComplaintType = 'Medical Report' GROUP BY ComplaintType";
-  $complaints_result = mysqli_query($conn, $complaints_query);
+$labels = array();
+$data = array();
+$total = 0;
 
-  $labels = array();
-  $data = array();
-  $total = 0;
-
-  while ($row = mysqli_fetch_assoc($complaints_result)) {
-    $labels[] = $row['ComplaintType'];
-    $data[] = $row['count'];
-    $total += $row['count'];
-  }
-
-
-  for ($i = 0; $i < count($data); $i++) {
-    $data[$i] = round($data[$i] / $total * 100, 2);
-  }
+while ($row = mysqli_fetch_assoc($complaints_result)) {
+  // Change label from "Closed" to "Cancelled"
+  $statusLabel = $row['Status'] == 'Closed' ? 'Cancelled' : $row['Status'];
   
+  $labels[] = $statusLabel;
+  $data[] = $row['count'];
+  $total += $row['count'];
+}
 
-  echo json_encode($labels);
-  echo json_encode($data);
+for ($i = 0; $i < count($data); $i++) {
+  $data[$i] = round($data[$i] / $total * 100, 2);
+}
 
+echo json_encode($labels);
+echo json_encode($data);
 ?>
+
+
 
   /* PIE GRAPH */
   const ctx = document.getElementById('myChart');
@@ -303,3 +329,4 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
     </body>
   </html>
  
+  

@@ -9,7 +9,7 @@ if (isset($_SESSION['UserID'])) {
     // Destroy the session
     session_destroy();
 
-    header("Location: http://localhost/ComplaintManagementSystem/");
+    header("Location: http://localhost/CMS/");
     exit();
 }
 ?>

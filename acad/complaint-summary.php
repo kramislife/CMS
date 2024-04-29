@@ -82,7 +82,7 @@ $errormsg = '';
                   </thead>
                   <tbody>
                     <?php
-                      $query = mysqli_query($conn, "SELECT * FROM complaints WHERE  (ComplaintType = 'Facility Issue' OR ComplaintType = 'Safety Concerns') ORDER BY Updated_Time DESC");                     
+                      $query = mysqli_query($conn, "SELECT * FROM complaints WHERE  (ComplaintType = 'Academic Issue' OR ComplaintType = 'Grading Report') ORDER BY Updated_Time DESC");                     
                     if (mysqli_num_rows($query) > 0) {
                       while ($row = mysqli_fetch_array($query)) {
                         ?>

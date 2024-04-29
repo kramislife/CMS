@@ -40,11 +40,7 @@ $errormsg = '';
 </head>
 
 <body>
-<<<<<<< HEAD
   <?php include("../osas/sidebar.php"); ?>
-=======
-  <?php include("../admin/sidebar.php"); ?>
->>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
   <?php include("../includes/header.php"); ?>
 
   <section id="container">
@@ -87,7 +83,7 @@ $errormsg = '';
                   </thead>
                   <tbody>
                     <?php
-                     $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0' ORDER BY 
+                     $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'Closed') AND Flag = '0' AND ComplaintType = 'Academic Issue'  ORDER BY 
                      CASE 
                          WHEN status = 'in process' THEN 1
                          WHEN status = 'closed' THEN 2

@@ -83,11 +83,11 @@ $errormsg = '';
                   </thead>
                   <tbody>
                     <?php
-                     $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0' ORDER BY 
-                     CASE 
-                         WHEN status = 'in process' THEN 1
-                         WHEN status = 'closed' THEN 2
-                     END, Updated_Time DESC");
+                        $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'Closed') AND Flag = '0' AND ComplaintType = 'Medical Report' ORDER BY 
+                        CASE 
+                            WHEN status = 'in process' THEN 1
+                            WHEN status = 'closed' THEN 2
+                        END, Updated_Time DESC");
 
                     if (mysqli_num_rows($query) > 0) {
                       while ($row = mysqli_fetch_array($query)) {

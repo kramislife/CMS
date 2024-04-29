@@ -381,60 +381,127 @@ statusDropdown.find('option[value="Closed"]').prop('hidden', status === 'Pending
 
 <!--DATA TABLES -->
 <script>
-  $(document).ready(function() {
-  $('#records').DataTable({
-    dom: 'lBfrtip',
-    buttons: [
-      {
-        extend: 'copy',
-        exportOptions: {
-          columns: [0, 1, 2, 3, 4, 5]
-        }
-      },
-      {
-        extend: 'excel',
-        exportOptions: {
-          columns: [0, 1, 2, 3, 4, 5]
-        }
-      },
-      {
-        extend: 'pdf',
-        exportOptions: {
-          columns: [0, 1, 2, 3, 4, 5]
-        }
-      },
-      {
-        extend: 'csv',
-        exportOptions: {
-          columns: [0, 1, 2, 3, 4, 5]
-        }
-      },
-      {
-        extend: 'print',
-        exportOptions: {
-          columns: [0, 1, 2, 3, 4, 5]
-        }
-      },
-    ],
-    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    searching: true,
-    paging: true,
-    ordering: true,
-    info: true,
-    order: true,
-    columnDefs: [
-      {
-        targets: 0,
-        orderable: false,
-        className: 'select-checkbox',
-      },
-    ],
-    select: {
-      style: 'multi',
-      selector: 'td:first-child',
-    },
-  });
+$(document).ready(function() {
+    $('#records').DataTable({
+        dom: 'lBfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                filename: function() {
+                    return 'CMS_ComplaintSummary' + (new Date().getFullYear()); // Filename with current year and 'Grouped'
+                },
+                title: function() {
+                    return 'CMS Complaint Summary (' + (new Date().getFullYear()) + ')'; // Title with current year and 'Grouped'
+                },
+                customize: function(xlsx) {
+                    // Get complaint years from the registration date
+                    var years = $('table#records tbody tr td[data-label="Registration Date"]').map(function() {
+                        return $(this).text().split('-')[0].trim(); // Extract year from registration date
+                    }).get();
+                    var uniqueYears = [...new Set(years)]; // Get unique years
+
+                    // Group complaints by year
+                    uniqueYears.forEach(function(year) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        $('row c[r^="B"]', sheet).each(function() {
+                            var cellValue = $('is t', this).text();
+                            if (cellValue.startsWith(year)) {
+                                $(this).closest('row').addClass('group-' + year); // Add class to group rows by year
+                            }
+                        });
+                    });
+                },
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
+            },
+            {
+                extend: 'pdf',
+                filename: function() {
+                    return 'CMS_Complaint_Summary_' + (new Date().getFullYear()); // Filename with current year and 'Grouped'
+                },
+                title: function() {
+                    return 'CMS Complaint Summary (' + (new Date().getFullYear()) + ')'; // Title with current year and 'Grouped'
+                },
+                customize: function(doc) {
+                    // Get complaint years from the registration date
+                    var years = $('table#records tbody tr td[data-label="Registration Date"]').map(function() {
+                        return $(this).text().split('-')[0].trim(); // Extract year from registration date
+                    }).get();
+                    var uniqueYears = [...new Set(years)]; // Get unique years
+
+                    // Group complaints by year
+                    uniqueYears.forEach(function(year) {
+                        doc.content.forEach(function(element, index) {
+                            if (element.text && element.text.startsWith(year)) {
+                                element.style = 'text-align: center'; // Center-align the year header
+                            }
+                        });
+                    });
+                },
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
+            },
+            {
+                extend: 'csv',
+                filename: function() {
+                    return 'CMS_Complaint_Summary_' + (new Date().getFullYear()) + '_Grouped'; // Filename with current year and 'Grouped'
+                },
+                title: function() {
+                    return 'CMS Complaint Summary (' + (new Date().getFullYear()) + ') Grouped'; // Title with current year and 'Grouped'
+                },
+                customize: function(csv) {
+                    // Get complaint years from the registration date
+                    var years = $('table#records tbody tr td[data-label="Registration Date"]').map(function() {
+                        return $(this).text().split('-')[0].trim(); // Extract year from registration date
+                    }).get();
+                    var uniqueYears = [...new Set(years)]; // Get unique years
+
+                    // Group complaints by year
+                    uniqueYears.forEach(function(year) {
+                        csv += '\n\nYear: ' + year + '\n'; // Add year header
+                        $('table#records tbody tr').each(function() {
+                            if ($(this).find('td[data-label="Registration Date"]').text().startsWith(year)) {
+                                csv += $(this).text() + '\n'; // Add row to CSV if it belongs to the current year
+                            }
+                        });
+                    });
+
+                    return csv;
+                },
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                }
+            },
+        ],
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        searching: true,
+        paging: true,
+        ordering: true,
+        info: true,
+        order: true,
+        columnDefs: [
+            {
+                targets: 0,
+                orderable: false,
+                className: 'select-checkbox',
+            },
+        ],
+        select: {
+            style: 'multi',
+            selector: 'td:first-child',
+        },
+    });
 });
+
+
 
 </script>
 

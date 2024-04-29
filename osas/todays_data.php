@@ -59,7 +59,6 @@ if (isset($_POST['checking_edit_btn'])) {
   exit;
 }
 
-<<<<<<< HEAD
 // EDIT FUNCTION IN MODAL CONFIRMED COMPLAINTS
 // EDIT FUNCTION IN MODAL CONFIRMED COMPLAINTS
 if (isset($_POST['checking_update_btn'])) { // Removed space before checking_update_btn
@@ -111,15 +110,12 @@ if (isset($_POST['checking_update_btn'])) { // Removed space before checking_upd
 }
 
 
-=======
->>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
 
 // DELETE FUNCTION IN MODAL
 if (isset($_POST['deleteData'])) {
   $id = $_POST['deleteID'];
   $id = mysqli_real_escape_string($conn, $id);
 
-<<<<<<< HEAD
   $selectQuery = "SELECT * FROM complaints WHERE ComplaintNumber = '$id'";
   $complaintData = mysqli_query($conn, $selectQuery);
   $complaint = mysqli_fetch_assoc($complaintData);
@@ -145,21 +141,6 @@ if (isset($_POST['deleteData'])) {
     exit;
   }
 }
-=======
-  $deleteQuery = "UPDATE complaints SET Flag = 1 WHERE ComplaintNumber = '$id'";
-  $deleteResult = mysqli_query($conn, $deleteQuery);
-
-  if ($deleteResult) {
-      $_SESSION['successmsg'] = 'Complaint Deleted Successfully!';
-  } else {
-      $_SESSION['errormsg'] = 'Failed to Delete Complaint.';
-  }
-
-  header("Location: confirmed-complaint");
-  exit;
-}
-  
->>>>>>> e439a6ac6efdf9a5b410b18b65cde96983d2fcb2
 
 ?>
 

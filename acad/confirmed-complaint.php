@@ -80,7 +80,7 @@ $errormsg = '';
                   <tbody>
 
                   <?php
-                     $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0' AND (ComplaintType = 'Facility Issue' OR ComplaintType = 'Safety Concerns') ORDER BY 
+                     $query = mysqli_query($conn, "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0' AND (ComplaintType = 'Discrimination' OR ComplaintType = 'Grading Report') ORDER BY 
                      CASE 
                          WHEN status = 'in process' THEN 1
                          WHEN status = 'closed' THEN 2

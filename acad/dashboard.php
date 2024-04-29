@@ -62,7 +62,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
               <div class="card text-white bg-danger mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Pending Complaints
                 <?php
-                 $pending_query = "SELECT * FROM complaints WHERE (Status = 'Pending' OR Status IS NULL) AND isDeleted = '0' AND (ComplaintType = 'Facility Issue' OR ComplaintType = 'Safety Concerns')";
+                 $pending_query = "SELECT * FROM complaints WHERE (Status = 'Pending' OR Status IS NULL) AND isDeleted = '0' AND ComplaintType = 'Discrimination' OR ComplaintType = 'Grading Report'";
                   $pending_query_run = mysqli_query($conn, $pending_query);
                   $pending_count = mysqli_num_rows($pending_query_run);
 
@@ -84,7 +84,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
               <div class="card text-white bg-success mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Confirmed Complaints
                 <?php
-                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process' OR Status = 'Closed') AND Flag = '0' AND (ComplaintType = 'Facility Issue' OR ComplaintType = 'Safety Concerns')";
+                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process') AND Flag = '0' AND ComplaintType = 'Medical Report'";
                   $confirmed_query_run = mysqli_query($conn, $confirmed_query);
                   $confirmed_count = mysqli_num_rows($confirmed_query_run);
 
@@ -103,12 +103,34 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
             </div>
 
             <div class="col-md-3">
+              <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
+                <div class="card-body">Cancelled Complaints
+                <?php
+                  $confirmed_query = "SELECT * FROM complaints WHERE (Status = 'In Process') AND Flag = '0' AND ComplaintType = 'Medical Report'";
+                  $confirmed_query_run = mysqli_query($conn, $confirmed_query);
+                  $confirmed_count = mysqli_num_rows($confirmed_query_run);
+
+                  if ($confirmed_count > 0) {
+                    echo '<h1 class="mb-3 pt-3" style="font-size: 30px;">'.$confirmed_count.'</h1>';
+                  } else {
+                    echo '<h4 class="mb-3 pt-3" style="font-size: 20px;">No Data!</h4>';
+                  }
+                ?>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                  <a class="small text-white stretched-link" href="closed-complaint">View Details</a>
+                  <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+              </div>
+            </div>
+
+             <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3" style="height: 170px; font-size:larger">
                   <div class="card-body">
                   <span class="opacity-icon">
                               Total Complaints
                               <?php
-                                $total_query = ("SELECT COUNT(*) AS complaint_count FROM complaints WHERE  (ComplaintType = 'Facility Issue' OR ComplaintType = 'Safety Concerns')");
+                                $total_query = ("SELECT COUNT(*) AS complaint_count FROM complaints WHERE ComplaintType = 'Medical Report'");
 
                                 $total_query_run = mysqli_query($conn, $total_query);
                                 $total_complaints = 0;
@@ -125,7 +147,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                               ?>
                             </span>
                     <div class="text-right" style="opacity: 0.5; font-size: 50px; align-items:center;">
-               <!-- <i class="fas fa-user-plus"></i> -->
+                <i class="fas fa-user-plus"></i> 
               </div>
 
                   </div>
@@ -134,9 +156,9 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                   </div>
                 </div>
-            </div>
+            </div> 
 
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
               <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Total Faculty Members
                 <?php
@@ -156,7 +178,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>    
       
           <div class="graphBox">
@@ -179,7 +201,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
 <script>
   <?php
 
-  $complaints_query = "SELECT ComplaintType, COUNT(*) AS count FROM complaints WHERE (ComplaintType = 'Facility Issue' OR ComplaintType = 'Safety Concerns') GROUP BY ComplaintType";
+  $complaints_query = "SELECT ComplaintType, COUNT(*) AS count FROM complaints WHERE ComplaintType = 'Medical Report' GROUP BY ComplaintType";
   $complaints_result = mysqli_query($conn, $complaints_query);
 
   $labels = array();
@@ -303,3 +325,4 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
     </body>
   </html>
  
+  

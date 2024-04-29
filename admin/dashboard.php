@@ -158,7 +158,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
               <div class="card text-white bg-secondary mb-3" style="height: 170px; font-size: larger;">
                 <div class="card-body">Total Faculty Members
                 <?php
@@ -178,7 +178,7 @@ while ($row = mysqli_fetch_assoc($data_query_run)) {
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>    
       
           <div class="graphBox">

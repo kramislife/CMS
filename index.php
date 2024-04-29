@@ -31,7 +31,7 @@ include ("./includes/connection.php")
 
     <span>Choose an Appropriate Portal.</span>
 
-    <div id="Students">
+    <div id="Students" style="margin-top: 20px;">
         <a href="./Student/Portal">Student</a>
     </div>
 
